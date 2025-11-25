@@ -1,0 +1,310 @@
+---
+title: "AI Code Generation Overview"
+description: "How Kyrna's AI generates production-ready infrastructure code"
+---
+
+## What is AI Code Generation?
+
+Kyrna's AI code generation transforms **natural language descriptions** into **production-ready Terraform code**. Instead of manually writing hundreds of lines of HCL, you describe what you want in plain English, and Kyrna's AI does the rest.
+
+## How It Works
+
+<Steps>
+  <Step title="Natural Language Input">
+    Describe your infrastructure in plain English
+    
+    ```text
+    Create a web application with auto-scaling, load balancer, 
+    and PostgreSQL database on AWS
+    ```
+  </Step>
+  
+  <Step title="AI Processing">
+    Kyrna's AI engine:
+    - Understands your requirements
+    - Identifies necessary cloud resources
+    - Determines resource relationships
+    - Applies best practices
+    - Optimizes for cost and security
+  </Step>
+  
+  <Step title="Code Generation">
+    Produces complete, ready-to-deploy Terraform:
+    - All resource definitions
+    - Proper dependencies
+    - Security configurations
+    - Output variables
+    - Documentation comments
+  </Step>
+  
+  <Step title="Real-Time Feedback">
+    Instantly see:
+    - Generated code in editor
+    - Estimated monthly cost
+    - Security scan results
+    - Architecture diagram
+  </Step>
+</Steps>
+
+## What Makes Kyrna's AI Different?
+
+### 1. Context-Aware Intelligence
+
+Kyrna AI understands **cloud-specific concepts**:
+
+<CardGroup cols={2}>
+  <Card title="Resource Relationships" icon="diagram-project">
+    Knows that ALB requires subnets, security groups, and target groups
+  </Card>
+  <Card title="Best Practices" icon="star">
+    Automatically applies AWS Well-Architected Framework principles
+  </Card>
+  <Card title="Security Defaults" icon="shield">
+    Generates secure configurations (encryption, least privilege, etc.)
+  </Card>
+  <Card title="Cost Optimization" icon="dollar-sign">
+    Suggests cost-effective instance types and configurations
+  </Card>
+</CardGroup>
+
+### 2. Multi-LLM Support
+
+Kyrna uses multiple AI models for best results:
+
+| Model | Strength | When Used |
+|-------|----------|-----------|
+| **Claude 3.5 Sonnet** | Complex infrastructure patterns | Multi-service architectures |
+| **GPT-4** | Detailed configurations | Fine-tuning specific resources |
+| **Custom Models** | Domain-specific knowledge | Specialized workloads |
+
+### 3. RAG-Enhanced Generation
+
+**Retrieval-Augmented Generation (RAG)** ensures accuracy:
+
+- Pulls latest documentation from Terraform Registry
+- References AWS/GCP/Azure best practices
+- Stays updated with newest resource types
+- Provides accurate attribute names and values
+
+## Example Generations
+
+### Simple: Web Server
+
+**Prompt:**
+```text
+Create a simple web server on AWS
+```
+
+**Generated:**
+```hcl
+resource "aws_instance" "web" {
+  ami           = "ami-0c55b159cbfafe1f0"  # Ubuntu 22.04
+  instance_type = "t3.micro"
+  
+  vpc_security_group_ids = [aws_security_group.web.id]
+  
+  user_data = <<-EOF
+              #!/bin/bash
+              apt-get update
+              apt-get install -y nginx
+              systemctl start nginx
+              EOF
+  
+  tags = {
+    Name = "web-server"
+    ManagedBy = "Kyrna"
+  }
+}
+
+resource "aws_security_group" "web" {
+  name        = "web-sg"
+  description = "Allow HTTP and SSH"
+  
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Should be restricted in production
+  }
+  
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+output "web_server_ip" {
+  value = aws_instance.web.public_ip
+}
+```
+
+**Cost:** ~$8/month
+
+### Advanced: Production Application
+
+**Prompt:**
+```text
+Create a production-ready web application on AWS with:
+- Auto-scaling across 3 availability zones
+- Application Load Balancer with SSL
+- RDS PostgreSQL multi-AZ
+- ElastiCache Redis cluster
+- S3 for static assets
+- CloudFront CDN
+```
+
+**Generated:** 20+ resources including VPC, subnets, security groups, ALB, ASG, RDS, ElastiCache, S3, CloudFront, ACM certificates, IAM roles, and CloudWatch alarms.
+
+**Cost:** ~$450/month
+
+## AI Generation Features
+
+### Interactive Refinement
+
+After initial generation, you can refine with follow-up prompts:
+
+```text
+Initial: "Create an EKS cluster"
+→ Generates basic EKS setup
+
+Refine: "Add managed node groups with 3-10 nodes"
+→ Updates to include node groups with auto-scaling
+
+Refine: "Use ARM instances for cost savings"
+→ Changes to Graviton instance types
+
+Refine: "Add application load balancer ingress controller"
+→ Adds ALB controller and IAM roles
+```
+
+### Smart Defaults
+
+Kyrna applies intelligent defaults:
+
+<AccordionGroup>
+  <Accordion title="Security">
+    - Encrypted EBS volumes
+    - Private subnets for databases
+    - Security groups with minimal access
+    - IAM roles with least privilege
+  </Accordion>
+  
+  <Accordion title="High Availability">
+    - Multi-AZ deployments for databases
+    - Auto-scaling groups across AZs
+    - Health checks and monitoring
+  </Accordion>
+  
+  <Accordion title="Cost Optimization">
+    - Right-sized instances
+    - Reserved capacity where applicable
+    - Lifecycle policies for storage
+  </Accordion>
+  
+  <Accordion title="Operational Excellence">
+    - CloudWatch alarms
+    - Proper tagging
+    - Output variables for dependencies
+  </Accordion>
+</AccordionGroup>
+
+### Multi-Cloud Support
+
+Generate for any cloud provider:
+
+<Tabs>
+  <Tab title="AWS">
+    ```text
+    Create a Kubernetes cluster on AWS EKS
+    ```
+  </Tab>
+  <Tab title="GCP">
+    ```text
+    Create a Kubernetes cluster on Google GKE
+    ```
+  </Tab>
+  <Tab title="Azure">
+    ```text
+    Create a Kubernetes cluster on Azure AKS
+    ```
+  </Tab>
+  <Tab title="DigitalOcean">
+    ```text
+    Create a Kubernetes cluster on DigitalOcean DOKS
+    ```
+  </Tab>
+</Tabs>
+
+## Best Practices for Prompts
+
+<Card title="Learn More" icon="lightbulb" href="/ai-generation/writing-prompts">
+  See our complete guide on writing effective AI prompts →
+</Card>
+
+### Do's ✅
+
+- Be specific about requirements
+- Mention cloud provider explicitly
+- Include environment (dev/prod)
+- Specify constraints (budget, region)
+- List integrations needed
+
+### Don'ts ❌
+
+- Don't be overly vague
+- Don't assume implicit requirements
+- Don't skip security requirements
+- Don't forget to mention databases
+- Don't ignore cost constraints
+
+## Limitations & Considerations
+
+<Warning>
+  While Kyrna's AI is powerful, always review generated code before deploying to production.
+</Warning>
+
+### Current Limitations
+
+- **Complex networking**: Very custom VPC designs may need manual adjustment
+- **Legacy systems**: Older resource types may have limited support
+- **Compliance**: Some industry-specific compliance needs manual verification
+- **Third-party integrations**: Non-standard integrations may need custom code
+
+### Best Practices
+
+1. **Start simple**: Generate basic structure, then refine
+2. **Review security**: Always review security group rules and IAM policies
+3. **Test in dev**: Deploy to dev environment first
+4. **Version control**: Commit generated code to Git
+5. **Iterate**: Use follow-up prompts to refine
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Writing Effective Prompts" icon="pen" href="/ai-generation/writing-prompts">
+    Master the art of AI prompts
+  </Card>
+  <Card title="AI Generation Examples" icon="book" href="/ai-generation/examples">
+    Browse 50+ real-world examples
+  </Card>
+  <Card title="Best Practices" icon="star" href="/ai-generation/best-practices">
+    Learn from expert patterns
+  </Card>
+  <Card title="Try It Now" icon="rocket" href="https://app.kyrna.com">
+    Start generating infrastructure
+  </Card>
+</CardGroup>
+
+---
+
+Questions? [Join our Discord](https://discord.gg/kyrna) or [contact support](mailto:support@kyrna.com)
+
