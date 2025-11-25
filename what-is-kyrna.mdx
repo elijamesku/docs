@@ -59,7 +59,7 @@ Kyrna workflow:
 Write code → See cost in real-time → Optimize before deploy → 😊
 ```
 
-<img src="/images/cost-realtime.png" alt="Real-time cost tracking" />
+![IDE](/Screenshot2025-11-24at7.19.37PM.png)
 
 ### 3. Built-In Security & Compliance
 
@@ -67,7 +67,7 @@ Write code → See cost in real-time → Optimize before deploy → 😊
 
 <CardGroup cols={3}>
   <Card title="Security Scanning" icon="shield-check">
-    Detect misconfigurations, open ports, weak policies
+    Detect misconfigurations
   </Card>
   <Card title="Drift Detection" icon="shuffle">
     Identify resources that diverged from code
@@ -81,15 +81,15 @@ Write code → See cost in real-time → Optimize before deploy → 😊
 
 Everything you need in **one place**.
 
-| Feature | Description |
-|---------|-------------|
-| **Monaco Editor** | The same editor powering VS Code |
-| **Syntax Highlighting** | Full HCL/Terraform support |
-| **Autocomplete** | Context-aware suggestions |
-| **Git Integration** | Commit, push, pull, PR automation |
-| **Terminal** | Integrated terminal for Terraform commands |
-| **File Tree** | Visual project structure |
-| **Multi-File** | Work across multiple files simultaneously |
+| Feature                 | Description                                |
+| ----------------------- | ------------------------------------------ |
+| **Monaco Editor**       | The same editor powering VS Code           |
+| **Syntax Highlighting** | Full HCL/Terraform support                 |
+| **Autocomplete**        | Context-aware suggestions                  |
+| **Git Integration**     | Commit, push, pull, PR automation          |
+| **Terminal**            | Integrated terminal for Terraform commands |
+| **File Tree**           | Visual project structure                   |
+| **Multi-File**          | Work across multiple files simultaneously  |
 
 ## How It Works
 
@@ -111,28 +111,32 @@ Everything you need in **one place**.
 ## Who Uses Kyrna?
 
 ### DevOps Engineers
-*"Kyrna lets me focus on architecture, not syntax. I ship infrastructure 3x faster."*
+
+_"Kyrna lets me focus on architecture, not syntax. I ship infrastructure 3x faster."_
 
 - Generate complex infrastructure quickly
 - Maintain consistency across environments
 - Reduce manual toil
 
 ### Backend Developers
-*"I can deploy my own infrastructure without bugging the DevOps team."*
+
+_"I can deploy my own infrastructure without bugging the DevOps team."_
 
 - Self-service infrastructure
 - No deep Terraform expertise needed
 - Focus on application, not infrastructure
 
 ### Platform Engineers
-*"Kyrna helps our team enforce standards and optimize costs automatically."*
+
+_"Kyrna helps our team enforce standards and optimize costs automatically."_
 
 - Template complex patterns
 - Enforce security policies
 - Track infrastructure costs
 
 ### Cloud Architects
-*"Real-time cost feedback changed how we design infrastructure."*
+
+_"Real-time cost feedback changed how we design infrastructure."_
 
 - Cost-aware architecture decisions
 - Visual diagrams for stakeholders
@@ -142,24 +146,7 @@ Everything you need in **one place**.
 
 Kyrna is built on modern, proven technologies:
 
-```mermaid
-graph TB
-    A[Kyrna Desktop/Web] --> B[AI Engine]
-    A --> C[Monaco Editor]
-    A --> D[Cost Calculator]
-    A --> E[Security Scanner]
-    
-    B --> F[Claude 3.5 Sonnet]
-    B --> G[GPT-4]
-    B --> H[Custom Models]
-    
-    D --> I[AWS Pricing API]
-    D --> J[GCP Pricing API]
-    D --> K[Azure Pricing API]
-    
-    E --> L[Terraform Validator]
-    E --> M[Security Rules Engine]
-    E --> N[Compliance Checker]
+```
 ```
 
 ### Key Components
@@ -171,40 +158,37 @@ graph TB
     - Context-aware generation understanding resource relationships
     - Continuous learning from user feedback
   </Accordion>
-  
   <Accordion title="Cost Intelligence">
     - Real-time pricing from AWS, GCP, Azure, DigitalOcean APIs
-    - 15+ resource types supported (EC2, RDS, EKS, Lambda, etc.)
+    - 50-+ resource types supported (EC2, RDS, EKS, Lambda, etc.)
     - Monthly and hourly cost breakdowns
     - Cost comparison for different configurations
   </Accordion>
-  
   <Accordion title="Security Scanner">
     - 200+ security rules (CIS Benchmarks, AWS Best Practices)
     - Drift detection comparing code vs. deployed state
     - Compliance checks (SOC2, HIPAA, PCI-DSS)
     - Automated remediation suggestions
   </Accordion>
-  
   <Accordion title="IDE Platform">
     - Monaco editor (1,400+ lines of custom integration)
     - Electron-based desktop apps (macOS, Windows, Linux)
-    - Web version for browser access
+    - Auto-heal logic
     - GitHub, GitLab, Bitbucket integration
   </Accordion>
 </AccordionGroup>
 
 ## Kyrna vs. Traditional Tools
 
-| Capability | Traditional Approach | Kyrna |
-|------------|---------------------|-------|
-| **Code Generation** | Manual or basic snippets | AI-powered, context-aware |
-| **Cost Visibility** | After deployment (AWS bills) | Real-time while coding |
-| **Security** | Separate tool (Checkov, etc.) | Built-in, automatic |
-| **IDE** | VS Code + extensions | Purpose-built for IaC |
-| **Diagrams** | Manual (Lucidchart, draw.io) | Auto-generated |
-| **Multi-Cloud** | Learn each provider | Unified interface |
-| **Learning Curve** | Months | Minutes |
+| Capability          | Traditional Approach          | Kyrna                     |
+| ------------------- | ----------------------------- | ------------------------- |
+| **Code Generation** | Manual or basic snippets      | AI-powered, context-aware |
+| **Cost Visibility** | After deployment (AWS bills)  | Real-time while coding    |
+| **Security**        | Separate tool (Checkov, etc.) | Built-in, automatic       |
+| **IDE**             | VS Code + extensions          | Purpose-built for IaC     |
+| **Diagrams**        | Manual (Lucidchart, draw.io)  | Auto-generated            |
+| **Multi-Cloud**     | Learn each provider           | Unified interface         |
+| **Learning Curve**  | Months                        | Minutes                   |
 
 ## What Makes Kyrna Unique?
 
@@ -241,28 +225,26 @@ Unlike other infrastructure tools:
 
 <CardGroup cols={3}>
   <Card title="Individual" icon="user">
-    **$15/month**
-    
+    **\$15/month**
+
     - 1 user
     - Unlimited projects
     - AI generation
     - Cost tracking
     - Security scanning
   </Card>
-  
   <Card title="Team" icon="users">
-    **$50/user/month**
-    
+    **\$50/user/month**
+
     - 5+ users
     - Team workspaces
     - Shared templates
     - SSO (SAML)
-    - Priority support
+    - Multi-cloud support
   </Card>
-  
   <Card title="Enterprise" icon="building">
     **Custom**
-    
+
     - Unlimited users
     - On-premise option
     - Dedicated support
@@ -275,15 +257,10 @@ Unlike other infrastructure tools:
 
 Ready to transform your infrastructure workflow?
 
-<Card
-  title="Try Kyrna Free"
-  icon="rocket"
-  href="/quickstart"
->
+<Card title="Try Kyrna Free" icon="rocket" href="/quickstart">
   Start building in under 5 minutes →
 </Card>
 
 ---
 
 Have questions? [Contact us](mailto:support@kyrna.com) or [join our Discord](https://discord.gg/kyrna)
-

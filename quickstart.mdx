@@ -10,48 +10,40 @@ This quickstart guide will walk you through creating your first AI-generated inf
 <Steps>
   <Step title="Sign Up & Install">
     ### Create Your Account
-    
+
     Visit [app.kyrna.com](https://app.kyrna.com) and sign up with your email or GitHub account.
-    
+
     ### Download Kyrna
-    
+
     <CardGroup cols={3}>
       <Card title="macOS" icon="apple">
         Download for macOS (Apple Silicon & Intel)
       </Card>
       <Card title="Windows" icon="windows">
-        Download for Windows 10/11
-      </Card>
-      <Card title="Linux" icon="linux">
-        Download for Ubuntu/Debian
+        Download for Windows 11
       </Card>
     </CardGroup>
-    
-    Or use the **web version** directly at [app.kyrna.com](https://app.kyrna.com)
   </Step>
-
   <Step title="Connect Your Cloud Account">
     ### AWS Setup (Most Common)
-    
+
     1. Click **"Connect Cloud Account"** in Kyrna
     2. Select **AWS**
     3. Choose connection method:
        - **Quick Connect**: Use AWS CLI credentials
        - **IAM Role**: Create read-only IAM role (recommended)
        - **Manual**: Enter access key and secret
-    
+
     ```bash
     # If using AWS CLI, verify credentials:
     aws sts get-caller-identity
     ```
-    
+
     <Tip>
-      Kyrna only needs **read-only** access for cost estimation and resource discovery. 
-      Deployment uses your local credentials.
+      Kyrna only needs **read-only** access for cost estimation and resource discovery. Deployment uses your local credentials.
     </Tip>
-    
     ### Other Cloud Providers
-    
+
     <AccordionGroup>
       <Accordion title="Google Cloud Platform (GCP)">
         1. Select **GCP** in cloud connection
@@ -70,59 +62,63 @@ This quickstart guide will walk you through creating your first AI-generated inf
       </Accordion>
     </AccordionGroup>
   </Step>
-
   <Step title="Create Your First Infrastructure">
     ### Using AI Generation
-    
+
     1. Click **"New Project"** in Kyrna
     2. Name your project (e.g., "my-web-app")
     3. In the AI prompt box, describe what you want:
-    
+
     <CodeGroup>
-      ```text Simple Example
-      Create a web server on AWS with a public IP address
-      ```
-      
-      ```text Advanced Example
-      Create a production-ready web application with:
-      - Application Load Balancer
-      - Auto Scaling Group (2-10 instances)
-      - RDS PostgreSQL database (db.t3.medium)
-      - Redis cache (ElastiCache)
-      - S3 bucket for static assets
-      - CloudFront CDN
-      ```
-    </CodeGroup>
+
+    ```text Simple Example
+    Create a web server on AWS with a public IP address
+    ```
+
     
+    ```text Advanced Example
+    Create a production-ready web application with:
+    - Application Load Balancer
+    - Auto Scaling Group (2-10 instances)
+    - RDS PostgreSQL database (db.t3.medium)
+    - Redis cache (ElastiCache)
+    - S3 bucket for static assets
+    - CloudFront CDN
+    ```
+
+    </CodeGroup>
+
     4. Press **Cmd+Enter** (Mac) or **Ctrl+Enter** (Windows/Linux)
     5. Watch as Kyrna generates your infrastructure code!
-    
-    <img src="/images/ai-generation-demo.gif" alt="AI generating infrastructure" />
-    
+
+    ![AI generating infrastructure](/images/ai-generation-demo.gif)
+
     ### What You'll See
-    
+
     Kyrna will show you:
+
     - ✅ **Generated Terraform code** with full resource definitions
-    - 💰 **Real-time cost estimate** (e.g., "$127/month")
+    - 💰 **Real-time cost estimate** (e.g., "\$127/month")
     - 🔒 **Security scan results** (any misconfigurations)
     - 📊 **Architecture diagram** (visual representation)
   </Step>
-
   <Step title="Review & Customize">
     ### Review the Generated Code
-    
+
     The AI-generated code appears in the editor with:
+
     - **Syntax highlighting** for Terraform/HCL
     - **Inline cost annotations** (hover over resources)
     - **Security warnings** (if any issues detected)
-    
+
     ### Make Adjustments
-    
+
     You can:
+
     - **Edit the code directly** in the editor
     - **Ask AI to modify** (e.g., "change instance type to t3.large")
     - **Add more resources** using AI or manually
-    
+
     ```hcl
     # Example: Kyrna generated this
     resource "aws_instance" "web" {
@@ -135,35 +131,35 @@ This quickstart guide will walk you through creating your first AI-generated inf
       }
     }
     ```
-    
+
     <Tip>
       Use **Cmd+K** (Mac) or **Ctrl+K** (Windows/Linux) to open the AI command palette for quick edits
     </Tip>
   </Step>
-
   <Step title="Deploy Your Infrastructure">
     ### Run Terraform Plan
-    
+
     1. Click **"Plan"** button or press **Cmd+Shift+P**
     2. Kyrna runs `terraform plan` and shows you what will be created
     3. Review the changes
-    
+
     ### Apply Changes
-    
+
     1. Click **"Apply"** button or press **Cmd+Shift+A**
     2. Confirm the deployment
     3. Watch real-time progress in the terminal panel
-    
+
     ```bash
     # Kyrna runs this for you:
     terraform init
     terraform plan
     terraform apply -auto-approve
     ```
-    
+
     ### Deployment Complete! 🎉
-    
+
     Once deployed, Kyrna shows:
+
     - ✅ **Deployed resources** with IDs and IPs
     - 📊 **Updated architecture diagram** with live resources
     - 💰 **Actual cost tracking** (updates daily)
@@ -204,7 +200,6 @@ Here are some popular infrastructure patterns to try:
     - ACM SSL certificate
     ```
   </Accordion>
-  
   <Accordion title="Containerized Application on ECS">
     ```text AI Prompt
     Create a containerized web app on ECS with:
@@ -215,7 +210,6 @@ Here are some popular infrastructure patterns to try:
     - Auto-scaling based on CPU
     ```
   </Accordion>
-  
   <Accordion title="Kubernetes Cluster on EKS">
     ```text AI Prompt
     Create a production EKS cluster with:
@@ -226,7 +220,6 @@ Here are some popular infrastructure patterns to try:
     - ALB Ingress Controller
     ```
   </Accordion>
-  
   <Accordion title="Serverless API with Lambda">
     ```text AI Prompt
     Create a serverless REST API with:
@@ -258,24 +251,20 @@ Here are some popular infrastructure patterns to try:
 <AccordionGroup>
   <Accordion title="AI generation is slow or not working">
     - Check your internet connection
-    - Verify API keys are configured (Settings → API Keys)
     - Try simplifying your prompt
     - Contact support if the issue persists
   </Accordion>
-  
-  <Accordion title="Cloud connection failed">
+  <Accordion title="Github wont authenticate">
     - Verify AWS CLI credentials: `aws sts get-caller-identity`
     - Check IAM permissions (needs read-only access)
     - Try re-authenticating in Settings → Cloud Accounts
   </Accordion>
-  
   <Accordion title="Cost estimates not showing">
     - Ensure cloud account is connected
     - Cost data may take 1-2 minutes to load
     - Some resources don't have public pricing (will show "Contact AWS")
   </Accordion>
-  
-  <Accordion title="Terraform apply failed">
+  <Accordion title="Terraform validate failed">
     - Check error message in terminal
     - Verify AWS credentials have deployment permissions
     - Ensure no resource naming conflicts
