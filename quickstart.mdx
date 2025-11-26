@@ -1,120 +1,275 @@
 ---
-title: "Quickstart"
-description: "Get started with Kyrna"
+title: "Quickstart Guide"
+description: "Get started with Kyrna in under 5 minutes"
 ---
 
-## Get Started
+## Welcome to Kyrna!
 
-**Status:** MVP - some features still in development
+This quickstart guide will walk you through creating your first AI-generated infrastructure. You'll go from zero to deployed infrastructure in under 5 minutes.
 
 <Steps>
-  <Step title="Sign Up">
-    Visit [app.kyrna.com](https://app.kyrna.com) or join Discord at [kyrna.ai](https://kyrna.ai)
-    
-    **Note:** MVP stage, free during testing
-  </Step>
+  <Step title="Install kyrna">
+    Visit [kyrna.ai](https://kyrna.ai) and sign up with your email or GitHub account.
 
-  <Step title="Try AI Generation">
-    Generate Terraform from natural language.
-    
-    Example prompts:
+    ### Download Kyrna
+
+    <CardGroup cols={3}>
+      <Card title="macOS" icon="apple">
+        Download for macOS (Apple Silicon & Intel)
+      </Card>
+      <Card title="Windows" icon="windows">
+        Download for Windows 11
+      </Card>
+    </CardGroup>
+  </Step>
+  <Step title="Authorize with Github">
+    ### Authorize with Github
+
+    1. Click **"Authorize with Github"** in Kyrna
+    2. Select **Confirm and continue**
+    3. Choose connection method:
+       - **Quick Connect**: Use AWS CLI credentials
+       - **IAM Role**: Create read-only IAM role (recommended)
+       - **Manual**: Enter access key and secret
+
+    ```bash
+    # If using AWS CLI, verify credentials:
+    aws sts get-caller-identity
     ```
-    Create a web server on AWS
-    
-    Create a PostgreSQL database
-    
-    Create a VPC with public and private subnets
+
+    <Tip>
+      Kyrna only needs **read-only** access for cost estimation and resource discovery. Deployment uses your local credentials.
+    </Tip>
+    ### Other Cloud Providers
+
+    <AccordionGroup>
+      <Accordion title="Google Cloud Platform (GCP)">
+        1. Select **GCP** in cloud connection
+        2. Authenticate with `gcloud` CLI
+        3. Grant Kyrna read access to billing APIs
+      </Accordion>
+      <Accordion title="Azure">
+        1. Select **Azure** in cloud connection
+        2. Authenticate with Azure CLI
+        3. Grant Kyrna subscription read access
+      </Accordion>
+      <Accordion title="DigitalOcean">
+        1. Select **DigitalOcean** in cloud connection
+        2. Generate API token in DigitalOcean console
+        3. Paste token in Kyrna
+      </Accordion>
+    </AccordionGroup>
+  </Step>
+  <Step title="Create Your First Infrastructure">
+    ### Using AI Generation
+
+    1. Click **"New Project"** in Kyrna
+    2. Name your project (e.g., "my-web-app")
+    3. In the AI prompt box, describe what you want:
+
+    <CodeGroup>
+
+    ```text Simple Example
+    Create a web server on AWS with a public IP address
     ```
-    
-    **Current:** AWS + Terraform only
-  </Step>
 
-  <Step title="See Costs">
-    Real-time AWS cost estimates appear automatically.
     
-    Example:
-    - t3.micro instance: $8.35/month
-    - db.t3.medium RDS: $61.32/month
-    
-    **Current:** 15+ AWS resource types
-  </Step>
+    ```text Advanced Example
+    Create a production-ready web application with:
+    - Application Load Balancer
+    - Auto Scaling Group (2-10 instances)
+    - RDS PostgreSQL database (db.t3.medium)
+    - Redis cache (ElastiCache)
+    - S3 bucket for static assets
+    - CloudFront CDN
+    ```
 
-  <Step title="Review Security">
-    Basic security scanning and drift detection.
-    
-    **Current:** MVP features, improving
+    </CodeGroup>
+
+    4. Press **Cmd+Enter** (Mac) or **Ctrl+Enter** (Windows/Linux)
+    5. Watch as Kyrna generates your infrastructure code!
+
+    ![AI generating infrastructure](/images/ai-generation-demo.gif)
+
+    ### What You'll See
+
+    Kyrna will show you:
+
+    - ✅ **Generated Terraform code** with full resource definitions
+    - 💰 **Real-time cost estimate** (e.g., "\$127/month")
+    - 🔒 **Security scan results** (any misconfigurations)
+    - 📊 **Architecture diagram** (visual representation)
+  </Step>
+  <Step title="Review & Customize">
+    ### Review the Generated Code
+
+    The AI-generated code appears in the editor with:
+
+    - **Syntax highlighting** for Terraform/HCL
+    - **Inline cost annotations** (hover over resources)
+    - **Security warnings** (if any issues detected)
+
+    ### Make Adjustments
+
+    You can:
+
+    - **Edit the code directly** in the editor
+    - **Ask AI to modify** (e.g., "change instance type to t3.large")
+    - **Add more resources** using AI or manually
+
+    ```hcl
+    # Example: Kyrna generated this
+    resource "aws_instance" "web" {
+      ami           = "ami-0c55b159cbfafe1f0"
+      instance_type = "t3.micro"  # ← You can edit this
+      
+      tags = {
+        Name = "web-server"
+        Cost = "$8.35/month"  # ← Kyrna adds cost annotations
+      }
+    }
+    ```
+
+    <Tip>
+      Use **Cmd+K** (Mac) or **Ctrl+K** (Windows/Linux) to open the AI command palette for quick edits
+    </Tip>
+  </Step>
+  <Step title="Deploy Your Infrastructure">
+    ### Run Terraform Plan
+
+    1. Click **"Plan"** button or press **Cmd+Shift+P**
+    2. Kyrna runs `terraform plan` and shows you what will be created
+    3. Review the changes
+
+    ### Apply Changes
+
+    1. Click **"Apply"** button or press **Cmd+Shift+A**
+    2. Confirm the deployment
+    3. Watch real-time progress in the terminal panel
+
+    ```bash
+    # Kyrna runs this for you:
+    terraform init
+    terraform plan
+    terraform apply -auto-approve
+    ```
+
+    ### Deployment Complete! 🎉
+
+    Once deployed, Kyrna shows:
+
+    - ✅ **Deployed resources** with IDs and IPs
+    - 📊 **Updated architecture diagram** with live resources
+    - 💰 **Actual cost tracking** (updates daily)
+    - 🔍 **Drift detection** (monitors for changes)
   </Step>
 </Steps>
 
-## What Works Now
+## What's Next?
 
-✅ AI code generation (Claude/GPT-4)  
-✅ Real-time AWS cost tracking  
-✅ Basic security scanning  
-✅ Drift detection  
-✅ Git integration  
-✅ Diagram generation  
-
-## What's Not Ready
-
-❌ Full desktop IDE (in progress)  
-❌ Multi-cloud (AWS only)  
-❌ Team features  
-❌ Enterprise features  
-
-## Example Usage
-
-**Generate a web server:**
-```
-1. Type: "Create a web server with public IP"
-2. Kyrna generates Terraform
-3. See cost estimate
-4. Review code
-5. Deploy
-```
-
-**Cost:** ~$8-15/month for basic setup
-
-## Common Use Cases
-
-<AccordionGroup>
-  <Accordion title="Learning Terraform">
-    Generate example code to learn Terraform syntax
-  </Accordion>
-  
-  <Accordion title="Rapid Prototyping">
-    Quickly spin up test infrastructure
-  </Accordion>
-  
-  <Accordion title="Cost Estimation">
-    See costs before deploying
-  </Accordion>
-</AccordionGroup>
-
-## Need Help?
+Congratulations! You've created your first AI-generated infrastructure. Here's what to explore next:
 
 <CardGroup cols={2}>
-  <Card title="Discord" icon="discord" href="https://kyrna.ai">
-    Join our community
+  <Card title="Master AI Prompts" icon="wand-magic-sparkles" href="/ai-generation/writing-prompts">
+    Learn how to write effective prompts for complex infrastructure
   </Card>
-  <Card title="Email" icon="envelope" href="mailto:support@kyrna.com">
-    Contact support
+  <Card title="Understand Costs" icon="dollar-sign" href="/cost/real-time-tracking">
+    Deep dive into cost tracking and optimization
+  </Card>
+  <Card title="Security Best Practices" icon="shield" href="/security/security-scanning">
+    Configure security scanning and fix vulnerabilities
+  </Card>
+  <Card title="IDE Tips & Tricks" icon="keyboard" href="/ide/keyboard-shortcuts">
+    Master keyboard shortcuts and productivity features
   </Card>
 </CardGroup>
 
-## Limitations
+## Common First Projects
 
-<Warning>
-  **MVP Status**
-  
-  - AWS only (no other clouds)
-  - Terraform only (no other IaC)
-  - Individual use (no teams)
-  - May have bugs
-</Warning>
+Here are some popular infrastructure patterns to try:
 
-## Next Steps
+<AccordionGroup>
+  <Accordion title="Static Website on S3 + CloudFront">
+    ```text AI Prompt
+    Create a static website hosting setup with:
+    - S3 bucket for website files
+    - CloudFront distribution for CDN
+    - Route53 for custom domain
+    - ACM SSL certificate
+    ```
+  </Accordion>
+  <Accordion title="Containerized Application on ECS">
+    ```text AI Prompt
+    Create a containerized web app on ECS with:
+    - ECS Fargate cluster
+    - Application Load Balancer
+    - RDS MySQL database
+    - ECR repository for Docker images
+    - Auto-scaling based on CPU
+    ```
+  </Accordion>
+  <Accordion title="Kubernetes Cluster on EKS">
+    ```text AI Prompt
+    Create a production EKS cluster with:
+    - EKS control plane
+    - 3 node groups (t3.medium)
+    - VPC with public and private subnets
+    - IAM roles for IRSA
+    - ALB Ingress Controller
+    ```
+  </Accordion>
+  <Accordion title="Serverless API with Lambda">
+    ```text AI Prompt
+    Create a serverless REST API with:
+    - API Gateway REST API
+    - Lambda functions for CRUD operations
+    - DynamoDB table for data storage
+    - CloudWatch Logs for monitoring
+    - IAM roles with least privilege
+    ```
+  </Accordion>
+</AccordionGroup>
 
-<Card title="What is Kyrna?" icon="info" href="/what-is-kyrna">
-  Learn more about what we're building →
-</Card>
+## Getting Help
+
+<CardGroup cols={3}>
+  <Card title="Video Tutorials" icon="video">
+    Watch step-by-step video guides
+  </Card>
+  <Card title="Join Discord" icon="discord" href="https://discord.gg/kyrna">
+    Ask questions in our community
+  </Card>
+  <Card title="Contact Support" icon="envelope" href="mailto:support@kyrna.com">
+    Email us for personalized help
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="AI generation is slow or not working">
+    - Check your internet connection
+    - Try simplifying your prompt
+    - Contact support if the issue persists
+  </Accordion>
+  <Accordion title="Github wont authenticate">
+    - Verify AWS CLI credentials: `aws sts get-caller-identity`
+    - Check IAM permissions (needs read-only access)
+    - Try re-authenticating in Settings → Cloud Accounts
+  </Accordion>
+  <Accordion title="Cost estimates not showing">
+    - Ensure cloud account is connected
+    - Cost data may take 1-2 minutes to load
+    - Some resources don't have public pricing (will show "Contact AWS")
+  </Accordion>
+  <Accordion title="Terraform validate failed">
+    - Check error message in terminal
+    - Verify AWS credentials have deployment permissions
+    - Ensure no resource naming conflicts
+    - Check for quota limits in your AWS account
+  </Accordion>
+</AccordionGroup>
+
+---
+
+Ready to dive deeper? Explore our [AI Generation Guide](/ai-generation/overview) or [IDE Features](/ide/editor-basics)!
