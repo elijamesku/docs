@@ -25,85 +25,31 @@
           {
             "group": "Getting Started",
             "pages": [
-              "quickstart",
-              "installation",
-              "connecting-cloud-accounts",
-              "first-infrastructure"
+              "quickstart"
             ]
           },
           {
             "group": "AI Code Generation",
             "pages": [
-              "ai-generation/overview",
-              "ai-generation/writing-prompts",
-              "ai-generation/best-practices",
-              "ai-generation/examples"
-            ]
-          },
-          {
-            "group": "IDE Features",
-            "pages": [
-              "ide/editor-basics",
-              "ide/keyboard-shortcuts",
-              "ide/file-management",
-              "ide/terminal",
-              "ide/git-integration"
+              "ai-generation/overview"
             ]
           },
           {
             "group": "Cost Intelligence",
             "pages": [
-              "cost/real-time-tracking",
-              "cost/cost-comparison",
-              "cost/optimization",
-              "cost/budgets-alerts"
+              "cost/real-time-tracking"
             ]
           },
           {
-            "group": "Security & Compliance",
+            "group": "Security",
             "pages": [
-              "security/security-scanning",
-              "security/drift-detection",
-              "security/compliance-checks",
-              "security/remediation"
+              "security/security-scanning"
             ]
           },
           {
-            "group": "Architecture & Diagrams",
+            "group": "Cloud Support",
             "pages": [
-              "diagrams/auto-generation",
-              "diagrams/customization",
-              "diagrams/documentation"
-            ]
-          },
-          {
-            "group": "Multi-Cloud",
-            "pages": [
-              "multi-cloud/aws",
-              "multi-cloud/gcp",
-              "multi-cloud/azure",
-              "multi-cloud/digitalocean"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "API Documentation",
-            "pages": [
-              "api-reference/introduction",
-              "api-reference/authentication"
-            ]
-          },
-          {
-            "group": "Endpoints",
-            "pages": [
-              "api-reference/endpoint/generate",
-              "api-reference/endpoint/cost-estimate",
-              "api-reference/endpoint/security-scan",
-              "api-reference/endpoint/diagram-generate"
+              "multi-cloud/aws"
             ]
           }
         ]
@@ -112,8 +58,8 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Community",
-          "href": "https://discord.gg/kyrna",
+          "anchor": "Discord",
+          "href": "https://kyrna.ai",
           "icon": "discord"
         },
         {

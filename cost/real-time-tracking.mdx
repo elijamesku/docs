@@ -1,54 +1,31 @@
 ---
 title: "Real-Time Cost Tracking"
-description: "See infrastructure costs while you code"
+description: "See AWS infrastructure costs while you code"
 ---
-
-## Why Real-Time Costs Matter
-
-Traditional workflow:
-```
-Write code → Deploy → Wait for AWS bill → 😱 → Fix and redeploy
-```
-
-Kyrna workflow:
-```
-Write code → See cost instantly → Optimize → Deploy with confidence 😊
-```
 
 ## How It Works
 
-Kyrna connects to cloud provider pricing APIs to show you **exact costs** while you code.
+Kyrna tracks AWS costs in real-time while you write Terraform code.
 
-<img src="/images/cost-inline.png" alt="Inline cost annotations" />
+**Status:** Working for AWS only
 
-### What You See
+## What You See
 
-<CardGroup cols={3}>
+<CardGroup cols={2}>
   <Card title="Per-Resource Cost" icon="tag">
-    Each resource shows its monthly cost
+    Each AWS resource shows its monthly cost
   </Card>
-  <Card title="Total Infrastructure" icon="calculator">
+  <Card title="Total Cost" icon="calculator">
     Sum of all resources in your project
-  </Card>
-  <Card title="Cost Breakdown" icon="chart-pie">
-    Percentage by service and resource type
   </Card>
 </CardGroup>
 
-## Cost Display Modes
-
-### 1. Inline Annotations
-
-Costs appear directly in your code:
+## Example
 
 ```hcl
 resource "aws_instance" "web" {
   ami           = "ami-0c55b159cbfafe1f0"
   instance_type = "t3.micro"          # 💰 $8.35/month
-  
-  tags = {
-    Name = "web-server"
-  }
 }
 
 resource "aws_db_instance" "main" {
@@ -60,296 +37,74 @@ resource "aws_db_instance" "main" {
 # Total: $81.17/month
 ```
 
-### 2. Cost Panel
-
-View detailed breakdown in the cost panel:
-
-| Resource | Type | Monthly | Hourly |
-|----------|------|---------|--------|
-| web | EC2 t3.micro | $8.35 | $0.0114 |
-| main | RDS t3.medium | $61.32 | $0.0836 |
-| main (storage) | EBS gp3 100GB | $11.50 | $0.0157 |
-| **Total** | | **$81.17** | **$0.1107** |
-
-### 3. Cost Graph
-
-Visualize costs over time and by category.
-
-## Supported Resources
-
-Kyrna tracks costs for 15+ AWS resource types:
+## Supported AWS Resources (15+)
 
 <AccordionGroup>
   <Accordion title="Compute">
-    - EC2 instances (all instance types)
-    - ECS Fargate tasks
-    - Lambda functions (by invocations)
-    - Elastic Beanstalk
+    - EC2 instances (all types)
+    - Lambda functions
+    - ECS Fargate
   </Accordion>
   
   <Accordion title="Storage">
-    - EBS volumes (gp2, gp3, io1, io2)
-    - S3 buckets (storage + requests)
+    - S3 buckets
+    - EBS volumes
     - EFS file systems
   </Accordion>
   
   <Accordion title="Database">
     - RDS instances (all engines)
-    - DynamoDB tables (on-demand & provisioned)
-    - ElastiCache clusters (Redis & Memcached)
-    - Aurora clusters
+    - DynamoDB tables
+    - ElastiCache
   </Accordion>
   
   <Accordion title="Networking">
     - Application Load Balancers
     - Network Load Balancers
     - NAT Gateways
-    - VPN connections
-    - Data transfer costs
-  </Accordion>
-  
-  <Accordion title="Other Services">
-    - CloudFront distributions
-    - Route53 hosted zones
-    - Elasticsearch clusters
-    - EKS clusters
   </Accordion>
 </AccordionGroup>
 
-<Note>
-  More cloud providers (GCP, Azure, DigitalOcean) coming soon!
-</Note>
+## Current Limitations
 
-## Cost Optimization Tips
-
-### Compare Instance Types
-
-Hover over instance types to see alternatives:
-
-```hcl
-instance_type = "t3.medium"  # 💰 $30.37/month
-                             # Try t3.small: $15.18/month (-50%)
-                             # Try t3a.medium: $27.36/month (-10%)
-```
-
-### Right-Size Your Resources
-
-Kyrna suggests optimizations:
-
-<Card title="Optimization Detected" icon="lightbulb">
-  **RDS instance is over-provisioned**
+<Warning>
+  **AWS Only**
   
-  Current: db.m5.2xlarge ($560/month)
-  
-  Recommendation: Start with db.t3.large ($123/month)
-  
-  Potential savings: **$437/month (78%)**
-</Card>
+  Currently only supports AWS. GCP, Azure, and DigitalOcean support coming later.
+</Warning>
 
-### Use Reserved Instances
-
-Calculate savings with reserved capacity:
-
-| Payment | 1 Year | 3 Years |
-|---------|--------|---------|
-| On-Demand | $437/mo | $437/mo |
-| No Upfront RI | $279/mo (36% off) | $186/mo (57% off) |
-| Partial Upfront RI | $268/mo (39% off) | $177/mo (59% off) |
-| Full Upfront RI | $257/mo (41% off) | $168/mo (62% off) |
+**What's NOT included:**
+- Data transfer costs (highly variable)
+- API request costs
+- Reserved Instance discounts
+- Actual billing (estimates only)
 
 ## Budget Alerts
 
-Set budgets to prevent overspending:
-
-<Steps>
-  <Step title="Set Budget Limit">
-    Define monthly budget (e.g., $500/month)
-  </Step>
-  <Step title="Configure Alerts">
-    Get notified at 50%, 80%, 100% of budget
-  </Step>
-  <Step title="Block Deployments">
-    Optionally block `terraform apply` if over budget
-  </Step>
-</Steps>
-
-### Example Alert
-
-<Warning>
-  **Budget Alert: 85% Used**
-  
-  Current month: $425 / $500
-  
-  Projected: $567 (13% over budget)
-  
-  Top costs:
-  - RDS: $240/mo
-  - EC2: $135/mo
-  - NAT Gateway: $50/mo
-</Warning>
-
-## Cost Tracking After Deployment
-
-Once deployed, Kyrna tracks **actual costs** (not estimates):
-
-### Real-Time Monitoring
-
-<CardGroup cols={2}>
-  <Card title="Daily Updates" icon="calendar">
-    Costs update daily from AWS Cost Explorer
-  </Card>
-  <Card title="Drift Alerts" icon="triangle-exclamation">
-    Get notified if costs increase unexpectedly
-  </Card>
-</CardGroup>
-
-### Cost Trends
-
-Track costs over time:
+Set monthly budget and get alerts:
 
 ```
-January:  $437/month (planned: $450)  ✅
-February: $441/month (planned: $450)  ✅
-March:    $623/month (planned: $450)  ⚠️ 38% over!
+Budget: $500/month
+Current: $425 (85%)
+⚠️ Alert triggered
 ```
 
-## Multi-Environment Costs
+**Status:** Basic implementation
 
-Compare costs across environments:
+## Accuracy
 
-| Environment | Monthly Cost | Difference |
-|-------------|--------------|------------|
-| Development | $127 | Baseline |
-| Staging | $234 | +84% |
-| Production | $1,247 | +882% |
-
-<Tip>
-  Keep dev/staging costs low by using smaller instance types and turning off resources when not in use
-</Tip>
-
-## Cost Attribution & Tagging
-
-Kyrna automatically adds cost-tracking tags:
-
-```hcl
-resource "aws_instance" "web" {
-  # ... configuration ...
-  
-  tags = {
-    Name        = "web-server"
-    Environment = "production"
-    Team        = "platform"
-    CostCenter  = "engineering"
-    ManagedBy   = "Kyrna"
-  }
-}
-```
-
-View costs by tag:
-
-| Tag | Cost | % of Total |
-|-----|------|------------|
-| Team: platform | $847 | 68% |
-| Team: data | $276 | 22% |
-| Team: ml | $124 | 10% |
-
-## Advanced Features
-
-### Cost Comparison
-
-Compare before/after changes:
-
-```diff
-resource "aws_instance" "web" {
-  ami           = "ami-0c55b159cbfafe1f0"
-- instance_type = "t3.large"     # 💰 $60.74/month
-+ instance_type = "t3.medium"    # 💰 $30.37/month
-}
-
-# Savings: $30.37/month (-50%)
-```
-
-### What-If Analysis
-
-Test configuration changes:
-
-```text
-Current config: $437/month
-
-What if I change to ARM instances?
-→ New cost: $312/month (-29%)
-
-What if I add a second database replica?
-→ New cost: $560/month (+28%)
-
-What if I enable CloudFront?
-→ New cost: $487/month (+11%)
-```
-
-### FinOps Integration
-
-Export cost data for FinOps tools:
-
-- CSV export for spreadsheets
-- JSON API for automation
-- CloudWatch metrics integration
-- Slack/email cost reports
-
-## Pricing Accuracy
-
-<Note>
-  Kyrna uses official AWS pricing APIs for accuracy. Costs are estimates until deployment, then tracked exactly.
-</Note>
-
-### What's Included
-
-✅ Compute costs (EC2, Fargate, Lambda)  
-✅ Storage costs (EBS, S3, EFS)  
-✅ Database costs (RDS, DynamoDB)  
-✅ Network costs (data transfer, NAT)  
-✅ Service costs (ALB, CloudFront)
-
-### What's Not Included
-
-❌ Data transfer between regions (highly variable)  
-❌ API request costs (depends on usage)  
-❌ Support plans  
-❌ Reserved Instance discounts (unless specified)
-
-## FAQs
-
-<AccordionGroup>
-  <Accordion title="Why are costs sometimes 'Contact AWS'?">
-    Some specialized instance types don't have public pricing. Contact AWS sales for pricing.
-  </Accordion>
-  
-  <Accordion title="Are costs guaranteed to be exact?">
-    Pre-deployment costs are estimates based on AWS pricing. Post-deployment, we track exact costs from your AWS bill.
-  </Accordion>
-  
-  <Accordion title="Can I see costs for GCP/Azure?">
-    GCP and Azure cost tracking coming Q2 2025!
-  </Accordion>
-  
-  <Accordion title="How often do costs update?">
-    Real-time in editor. Actual deployed costs update daily from AWS Cost Explorer.
-  </Accordion>
-</AccordionGroup>
+- Uses official AWS pricing APIs
+- Estimates only (not actual bills)
+- Updated regularly
+- Some specialized instances may show "Contact AWS"
 
 ## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Cost Optimization Guide" icon="lightbulb" href="/cost/optimization">
+  <Card title="Cost Optimization" icon="lightbulb" href="/cost/optimization">
     Learn optimization strategies
   </Card>
-  <Card title="Budget & Alerts" icon="bell" href="/cost/budgets-alerts">
-    Set up budget notifications
-  </Card>
-  <Card title="Cost Comparison" icon="balance-scale" href="/cost/cost-comparison">
-    Compare infrastructure options
-  </Card>
-  <Card title="Try It Now" icon="rocket" href="https://app.kyrna.com">
-    See costs in real-time
+  <Card title="Try It" icon="rocket" href="https://app.kyrna.com">
+    See costs in action
   </Card>
 </CardGroup>
-
