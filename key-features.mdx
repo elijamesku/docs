@@ -3,21 +3,22 @@ title: "Current Features"
 description: "What's actually built and working"
 ---
 
-## Features That Actually Work
+## Features 
 
 This is what you get today (MVP):
 
-### 🤖 AI Code Generation
+### AI Code Generation
 
 Generate Terraform from natural language.
 
 **What works:**
-- Claude 3.5 Sonnet or GPT-4
-- Natural language → Terraform
+
+- Claude 4.5 Sonnet or GPT-5
+- Natural language \>\> Terraform
 - Multi-resource generation
 - AWS services (EC2, RDS, S3, VPC, Lambda, etc.)
 
-**Status:** ✅ Working
+**Status:** Working
 
 <Card title="Learn More" icon="wand-magic-sparkles" href="/ai-generation/overview">
   AI generation docs →
@@ -25,21 +26,23 @@ Generate Terraform from natural language.
 
 ---
 
-### 💰 Cost Tracking
+### Cost Tracking
 
 Real-time AWS cost estimates while you code.
 
 **What works:**
+
 - 15+ AWS resource types
 - Monthly/hourly costs
 - Per-resource breakdown
 - Budget alerts
 
 **Limitations:**
+
 - AWS only (no GCP/Azure)
 - Estimates only (not actual bills)
 
-**Status:** ✅ Working
+**Status:** Working
 
 <Card title="Learn More" icon="dollar-sign" href="/cost/real-time-tracking">
   Cost tracking docs →
@@ -47,17 +50,18 @@ Real-time AWS cost estimates while you code.
 
 ---
 
-### 🔒 Security & Drift
+### Security & Drift
 
 Basic security scanning and drift detection.
 
 **What works:**
+
 - Drift detection (code vs deployed)
 - Terraform validate/fmt
 - Auto-heal for common errors
 - Basic security checks
 
-**Status:** ✅ MVP (improving)
+**Status:** MVP (improving)
 
 <Card title="Learn More" icon="shield" href="/security/security-scanning">
   Security docs →
@@ -65,79 +69,32 @@ Basic security scanning and drift detection.
 
 ---
 
-### 🔄 Git Workflow
+### Git Workflow
 
 Git integration for infrastructure code.
 
 **What works:**
+
 - Diff approval workflow
 - Branch creation
 - Commit automation
 - PR generation
 
-**Status:** ✅ Working
+**Status:** Working
 
----
-
-### 📊 Diagrams & Docs
+### Diagrams & Docs
 
 Auto-generate from Terraform code.
 
 **What works:**
+
 - Architecture diagrams
 - Documentation generation
 - GitHub integration
 
-**Status:** ✅ Basic (improving)
+**Status:** Basic (improving)
 
 ---
-
-## What's NOT Built Yet
-
-Be honest about what's missing:
-
-### ❌ Multi-Cloud
-- No GCP support
-- No Azure support
-- No DigitalOcean support
-- **Only AWS**
-
-### ❌ Full IDE
-- Monaco editor exists
-- Desktop app in progress
-- Not fully featured yet
-
-### ❌ Multi-IaC
-- Only Terraform
-- No Pulumi, CDK, CloudFormation
-
-### ❌ Team Features
-- No SSO/SAML
-- No RBAC
-- No team workspaces
-- Individual use only
-
-### ❌ Enterprise
-- No on-premise
-- No SLA
-- No dedicated support
-
-## Tech Stack
-
-**Backend:**
-- Python/FastAPI
-- PostgreSQL (Supabase)
-- Claude/GPT-4 APIs
-
-**Frontend:**
-- React + TypeScript
-- Monaco Editor
-- Electron (in progress)
-
-**Infrastructure:**
-- Kubernetes
-- WebSocket streaming
-- JWT auth
 
 ## Get Started
 
