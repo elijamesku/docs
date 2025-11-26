@@ -5,7 +5,7 @@ description: "Honest overview of what we've built"
 
 ## Overview
 
-Kyrna is an AI-powered platform for infrastructure code generation. We help you write Terraform faster using natural language, with real-time cost tracking and security scanning built-in.
+Kyrna is an AI-powered platform for infrastructure code generation. We help you write Terraform faster than ever using natural language, with real-time cost tracking and security scanning built-in.
 
 **Current Status:** MVP with working features, building toward a complete cloud operating system.
 
@@ -14,12 +14,14 @@ Kyrna is an AI-powered platform for infrastructure code generation. We help you 
 ### 1. AI Code Generation
 
 **What it does:**
-- Type natural language → Get Terraform code
-- Uses Claude 3.5 Sonnet or GPT-4
+
+- Type natural language \>\> Get Terraform code
+- Uses Claude 4.5 Sonnet or GPT-5
 - Generates EC2, RDS, S3, VPC, Lambda, etc.
 - Context-aware (understands resource relationships)
 
 **Example:**
+
 ```
 You type: "Create a web server with PostgreSQL database"
 
@@ -28,28 +30,33 @@ Kyrna generates:
 - aws_db_instance (RDS)
 - aws_security_group
 - aws_subnet
-- All configurations
+- all configurations
+- docs explaining what was created and why
 ```
 
 ### 2. Real-Time Cost Tracking
 
 **What it does:**
+
 - Shows AWS costs while you code
-- Covers 15+ AWS resource types
+- Covers 50+ AWS resource types
 - Monthly and hourly breakdowns
 - Budget alerts
 
 **Supported AWS Resources:**
+
 - EC2, RDS, DynamoDB, Lambda
 - S3, EBS, CloudWatch
 - VPC, Subnets, Security Groups
 - ELB, ALB, Route53
+- and more...
 
-**Current Limitation:** AWS only (no GCP/Azure yet)
+AWS only with GCP + Azure coming soon!
 
 ### 3. Security & Drift Detection
 
 **What it does:**
+
 - Detects drift (code vs deployed state)
 - Basic security scanning
 - Terraform validate/fmt
@@ -60,76 +67,38 @@ Kyrna generates:
 ### 4. Development Workflow
 
 **What it does:**
+
 - Diff approval (review before commit)
+- Baked in Terraform fmt + validate with auto heal logic baked in
 - Git integration (branch, commit, PR)
 - Diagram generation (from Terraform)
-- Documentation generation
-
-## Technical Stack
-
-**Backend:**
-- FastAPI (Python)
-- PostgreSQL (Supabase)
-- Claude 3.5 Sonnet / GPT-4
-
-**Frontend:**
-- React + TypeScript
-- Monaco Editor (VS Code engine)
-- Electron (desktop app - in progress)
-
-**Infrastructure:**
-- Kubernetes deployment
-- WebSocket for streaming
-- JWT authentication
-
-## What We DON'T Have (Yet)
-
-Be honest about limitations:
-
-❌ **Multi-cloud:** Only AWS (no GCP, Azure, DigitalOcean)  
-❌ **Multi-IaC:** Only Terraform (no Pulumi, CDK, CloudFormation)  
-❌ **Full IDE:** Monaco editor exists but desktop app in progress  
-❌ **Team features:** No SSO, RBAC, or team workspaces  
-❌ **Enterprise:** No on-premise, no SLA  
-
-These are planned, just not built yet.
+- Documentation generation (from Terraform)
 
 ## Who Uses Kyrna
 
 **Current users:**
-- Individual developers learning Terraform
-- Small teams building AWS infrastructure
-- DevOps engineers prototyping
-- Students/learners
 
-**Not ready for:**
-- Large enterprises (no SSO/RBAC)
-- Multi-cloud teams (AWS only)
-- Mission-critical production (MVP stage)
+- Individual developers usingTerraform
+- Small teams building + managing AWS infrastructure
+- Engineers that desire to deploy infra
+
+**Coming soon:**
+
+- Large enterprises (SSO/RBAC)
+- Multi-cloud teams
 
 ## Pricing
 
 **Current:**
+
 - Free during MVP phase
 - Early access for testing
 
 **Planned:**
-- Individual: ~$15-25/month
-- Team: ~$50/user/month
+
+- Individual: ~\$15-25/month
+- Team: ~\$200/user/month
 - Enterprise: Custom
-
-## Roadmap
-
-**Next 6 months:**
-1. Complete desktop IDE
-2. Improve security scanning
-3. Add GCP support
-4. Team collaboration features
-
-**Next 12 months:**
-5. Azure + DigitalOcean support
-6. Pulumi code generation
-7. Complete cloud OS vision
 
 ## Get Started
 

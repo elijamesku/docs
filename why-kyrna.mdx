@@ -1,11 +1,12 @@
 ---
 title: "Why Kyrna?"
-description: "Honest comparison and current state"
+description: "Comparison and current state"
 ---
 
 ## The Problem
 
-Writing infrastructure code is slow:
+Writing and managing infrastructure code is slow:
+
 - Hours reading Terraform docs
 - Trial and error with syntax
 - Cost surprises after deployment
@@ -16,16 +17,19 @@ Writing infrastructure code is slow:
 ### What Works Now
 
 **AI Code Generation:**
-- Natural language → Terraform
+
+- Natural language \>\> Terraform
 - AWS resources
 - Basic but functional
 
 **Cost Tracking:**
+
 - Real-time AWS estimates
-- 15+ resource types
+- 50+ resource types
 - Budget alerts
 
 **Security:**
+
 - Basic drift detection
 - Terraform validation
 - Auto-heal for errors
@@ -34,7 +38,7 @@ Writing infrastructure code is slow:
 
 ## Who Should Use Kyrna
 
-### ✅ Good Fit
+### Good Fit
 
 - **Learning Terraform** - Generate examples to learn from
 - **AWS Users** - We support AWS well
@@ -42,65 +46,56 @@ Writing infrastructure code is slow:
 - **Prototyping** - Quick infrastructure setup
 - **Cost-Conscious** - See costs before deploying
 
-### ❌ Not Ready For
+### Coming soon...
 
 - **Multi-cloud teams** - AWS only right now
 - **Large enterprises** - No SSO/RBAC yet
 - **Mission-critical** - MVP stage, use with caution
 - **Non-Terraform users** - Terraform only
 
-## Honest Comparison
+## Comparison
 
 ### vs. Manual Terraform
 
-| Aspect | Manual | Kyrna |
-|--------|--------|-------|
-| **Learning Curve** | Months | Days |
-| **Code Generation** | Manual | AI-assisted |
-| **Cost Visibility** | After deploy | Real-time |
-| **Speed** | Hours | Minutes |
-| **Status** | Mature | MVP |
+| Aspect              | Manual       | Kyrna       |
+| ------------------- | ------------ | ----------- |
+| **Learning Curve**  | Months       | Days        |
+| **Code Generation** | Manual       | AI-assisted |
+| **Cost Visibility** | After deploy | Real-time   |
+| **Speed**           | Hours        | Minutes     |
+| **Status**          | Mature       | MVP         |
 
-### vs. Firefly ($2,499/month)
+### vs. Firefly (\$2,499/month)
 
-| Aspect | Firefly | Kyrna |
-|--------|---------|-------|
-| **Focus** | Management | Creation |
-| **Price** | $2,499/mo | Free (MVP) |
-| **IDE** | No | In progress |
-| **Maturity** | Production | MVP |
+| Aspect       | Firefly     | Kyrna       |
+| ------------ | ----------- | ----------- |
+| **Focus**    | Management  | Creation    |
+| **Price**    | \$2,499/mo  | Free (MVP)  |
+| **IDE**      | No          | In progress |
+| **Maturity** | Production  | MVP         |
 | **Best For** | Enterprises | Individuals |
 
 ### vs. Spacelift
 
-| Aspect | Spacelift | Kyrna |
-|--------|-----------|-------|
-| **Focus** | Deployment | Development |
-| **AI Generation** | No | Yes |
-| **Price** | $50+/user | Free (MVP) |
-| **Status** | Production | MVP |
+| Aspect            | Spacelift  | Kyrna       |
+| ----------------- | ---------- | ----------- |
+| **Focus**         | Deployment | Development |
+| **AI Generation** | No         | Yes         |
+| **Price**         | \$50+/user | Free (MVP)  |
+| **Status**        | Production | MVP         |
 
 ### vs. Brainboard
 
-| Aspect | Brainboard | Kyrna |
-|--------|------------|-------|
-| **Approach** | Visual | Code + AI |
-| **IDE** | No | In progress |
-| **Maturity** | Production | MVP |
-
-## Current Limitations
-
-Be realistic about what we don't have:
-
-❌ **No multi-cloud** (AWS only)  
-❌ **No team features** (individual only)  
-❌ **No enterprise** (no SSO, RBAC, SLA)  
-❌ **MVP stage** (expect bugs)  
-❌ **No full IDE** (desktop app in progress)  
+| Aspect       | Brainboard | Kyrna       |
+| ------------ | ---------- | ----------- |
+| **Approach** | Visual     | Code + AI   |
+| **IDE**      | No         | In progress |
+| **Maturity** | Production | MVP         |
 
 ## Why Build It?
 
-We're college students/new grads who:
+We're developers who:
+
 - Struggled learning Terraform
 - Got surprised by AWS bills
 - Thought "there has to be a better way"
@@ -108,21 +103,14 @@ We're college students/new grads who:
 
 **Vision:** Complete cloud operating system
 
-**Reality:** MVP with core features working
-
 ## Should You Use It?
 
 **Yes, if you:**
+
 - Want to learn Terraform faster
 - Need AWS cost estimates
-- Are okay with MVP/bugs
 - Want to try AI code generation
-
-**No, if you:**
-- Need production-ready enterprise tool
-- Require multi-cloud support
-- Need team collaboration features
-- Can't tolerate bugs
+- Want automated management of your infra
 
 ## Get Started
 
