@@ -29,7 +29,7 @@ This quickstart guide will walk you through creating your first AI-generated inf
     2. Select **Confirm and continue**
     3. Select your repository or create one
 
-    ![Screenshot 2025-11-25 at 9.43.41 PM.png](/images/Screenshot2025-11-25at9.43.41PM.png)
+    ![Screenshot 2025-11-25 at 9.43.41 PM.png](/Screenshot2025-11-26at12.03.32PM.png)
 
     ```
     # If using AWS CLI, verify credentials:
@@ -69,8 +69,6 @@ This quickstart guide will walk you through creating your first AI-generated inf
     4. Press **Cmd+Enter** (Mac) or **Ctrl+Enter** (Windows/Linux)
     5. Watch as Kyrna generates your infrastructure code!
 
-    ![AI generating infrastructure](/Screenshot2025-11-25at9.44.52PM.png)
-
     ### What You'll See
 
     Kyrna will show you:
@@ -88,6 +86,9 @@ This quickstart guide will walk you through creating your first AI-generated inf
     - **Syntax highlighting** for Terraform/HCL
     - **Inline cost annotations** (hover over resources)
     - **Security warnings** (if any issues detected)
+    - 
+
+    ![Screenshot 2025-11-26 at 12.07.20 PM.png](/images/Screenshot2025-11-26at12.07.20PM.png)
 
     ### Make Adjustments
 
@@ -115,12 +116,6 @@ This quickstart guide will walk you through creating your first AI-generated inf
     </Tip>
   </Step>
   <Step title="Deploy Your Infrastructure">
-    ### Run Terraform Plan
-
-    1. Click **"Plan"** button or press **Cmd+Shift+P**
-    2. Kyrna runs `terraform plan` and shows you what will be created
-    3. Review the changes
-
     ### Apply Changes
 
     1. Click **"Apply"** button or press **Cmd+Shift+A**
@@ -130,18 +125,18 @@ This quickstart guide will walk you through creating your first AI-generated inf
     ```bash
     # Kyrna runs this for you:
     terraform init
-    terraform plan
-    terraform apply -auto-approve
+    terraform fmt
+    terraform validate
     ```
 
-    ### Deployment Complete! 🎉
+    ### Deployment Complete! 
 
     Once deployed, Kyrna shows:
 
-    - ✅ **Deployed resources** with IDs and IPs
-    - 📊 **Updated architecture diagram** with live resources
-    - 💰 **Actual cost tracking** (updates daily)
-    - 🔍 **Drift detection** (monitors for changes)
+    - **Deployed resources** with IDs and IPs
+    - **Updated architecture diagram** with live resources
+    - **Actual cost tracking** (updates daily)
+    - **Drift detection** (monitors for changes)
   </Step>
 </Steps>
 
