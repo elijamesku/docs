@@ -3,8 +3,314 @@ title: "Writing Effective Prompts"
 description: "Master the art of AI prompts for infrastructure"
 ---
 
-## Prompt Best Practices
+## Best Practices for AI Prompts
 
-Learn how to write effective prompts for Kyrna's AI.
+Kyrna's AI understands natural language, but the more specific you are, the better results you'll get.
 
-(Content coming soon)
+---
+
+## Basic Prompt Structure
+
+### Good Prompts Include:
+- **Resource type** (EC2, RDS, S3, etc.)
+- **Configuration details** (instance type, storage size)
+- **Purpose** (what it's for)
+- **Constraints** (budget, region, security requirements)
+
+---
+
+## Examples
+
+### ❌ Bad Prompt
+```
+Create a server
+```
+
+**Why it's bad:** Too vague - AI doesn't know what type, size, or purpose.
+
+---
+
+### ✅ Good Prompt
+```
+Create a t3.micro EC2 instance running Amazon Linux 2 
+with a public IP address for a web application
+```
+
+**Why it's good:** Specific instance type, OS, networking, and purpose.
+
+---
+
+### ⭐ Excellent Prompt
+```
+Create a production web server setup with:
+- t3.medium EC2 instance in us-east-1
+- 50GB EBS volume (gp3) for application data
+- Security group allowing HTTPS (443) from anywhere and SSH (22) from 203.0.113.0/24
+- Elastic IP for stable public address
+- CloudWatch monitoring with CPU alarm at 80%
+- Tags: Environment=production, Team=backend
+```
+
+**Why it's excellent:** Complete specifications, security considerations, monitoring, and organization.
+
+---
+
+## Prompt Patterns
+
+### 1. Simple Resource Creation
+
+```
+Create an [RESOURCE_TYPE] with [KEY_FEATURES]
+
+Examples:
+- Create an S3 bucket with versioning enabled
+- Create a PostgreSQL RDS instance (db.t3.micro)
+- Create a Lambda function with 512MB memory
+```
+
+### 2. Multi-Resource Setup
+
+```
+Create a [ARCHITECTURE_NAME] with:
+- [RESOURCE 1] with [SPECS]
+- [RESOURCE 2] with [SPECS]
+- [RESOURCE 3] with [SPECS]
+
+Example:
+Create a serverless API with:
+- API Gateway REST API
+- Lambda function (Python 3.11, 1024MB)
+- DynamoDB table with on-demand billing
+```
+
+### 3. Modification Requests
+
+```
+Add [FEATURE] to [EXISTING_RESOURCE]
+
+Examples:
+- Add encryption to the S3 bucket
+- Add auto-scaling to the EC2 instance
+- Add a read replica to the RDS database
+```
+
+### 4. Security-Focused
+
+```
+Create a secure [RESOURCE] with:
+- [SECURITY_FEATURE_1]
+- [SECURITY_FEATURE_2]
+
+Example:
+Create a secure web server with:
+- Private subnet placement
+- Security group allowing only port 443
+- Encrypted EBS volumes
+- IAM instance profile with least privilege
+```
+
+---
+
+## Tips by Resource Type
+
+### EC2 Instances
+
+**Include:**
+- Instance type (`t3.micro`, `m5.large`)
+- AMI or OS (`Amazon Linux 2`, `Ubuntu 22.04`)
+- Networking (`public IP`, `private subnet`)
+- Storage (`20GB gp3 volume`)
+- Security groups (which ports to allow)
+
+**Example:**
+```
+Create a t3.small EC2 instance with Amazon Linux 2, 
+30GB gp3 root volume, and security group allowing 
+HTTP/HTTPS from anywhere and SSH from my IP
+```
+
+---
+
+### RDS Databases
+
+**Include:**
+- Engine and version (`PostgreSQL 15`, `MySQL 8.0`)
+- Instance class (`db.t3.micro`, `db.r6g.large`)
+- Storage size (`20GB`, `100GB`)
+- Multi-AZ or read replicas
+- Backup retention
+
+**Example:**
+```
+Create a PostgreSQL 15 RDS instance (db.t3.medium) with 
+50GB storage, multi-AZ enabled, 7-day backup retention, 
+and a read replica in us-west-2
+```
+
+---
+
+### S3 Buckets
+
+**Include:**
+- Versioning (`enabled`, `disabled`)
+- Encryption (`AES-256`, `KMS`)
+- Public access (usually `blocked`)
+- Lifecycle policies
+- CORS if needed
+
+**Example:**
+```
+Create an S3 bucket for application logs with:
+- Versioning enabled
+- Server-side encryption (AES-256)
+- Block all public access
+- Lifecycle policy to archive to Glacier after 90 days
+```
+
+---
+
+### VPC & Networking
+
+**Include:**
+- CIDR block (`10.0.0.0/16`)
+- Number of subnets
+- Public vs private subnets
+- NAT gateway needs
+- Route tables
+
+**Example:**
+```
+Create a VPC (10.0.0.0/16) with:
+- 2 public subnets (10.0.1.0/24, 10.0.2.0/24)
+- 2 private subnets (10.0.10.0/24, 10.0.11.0/24)
+- Internet gateway for public subnets
+- NAT gateway in one public subnet
+- Route tables configured appropriately
+```
+
+---
+
+## Advanced Techniques
+
+### Iterative Refinement
+
+Start broad, then refine:
+
+```
+1. Initial: "Create a web application infrastructure"
+   
+2. Add details: "Create a web application with load balancer and auto-scaling"
+   
+3. Specify: "Create a web application with:
+   - Application Load Balancer
+   - Auto Scaling Group (2-6 t3.small instances)
+   - RDS PostgreSQL database
+   - ElastiCache Redis cluster"
+```
+
+### Cost-Conscious Prompts
+
+```
+Create a [RESOURCE] optimized for low cost
+
+Examples:
+- Create a low-cost development database (use db.t3.micro)
+- Create a cost-effective file storage (use S3 Intelligent-Tiering)
+- Create a budget-friendly web server (use t3.nano spot instance)
+```
+
+### Region-Specific
+
+```
+Create [RESOURCE] in [REGION]
+
+Examples:
+- Create an EC2 instance in us-west-2
+- Create a multi-region setup with primary in us-east-1 and replica in eu-west-1
+```
+
+---
+
+## Common Mistakes to Avoid
+
+### 1. Being Too Vague
+❌ "Create a database"
+✅ "Create a PostgreSQL 15 RDS instance (db.t3.micro) with 20GB storage"
+
+### 2. Missing Security Requirements
+❌ "Create an EC2 instance"
+✅ "Create an EC2 instance with security group allowing only SSH from my IP"
+
+### 3. No Resource Sizing
+❌ "Create a server"
+✅ "Create a t3.medium EC2 instance"
+
+### 4. Forgetting Networking
+❌ "Create a web server"
+✅ "Create a web server in public subnet with public IP"
+
+### 5. Ignoring Costs
+❌ "Create a powerful database"
+✅ "Create a db.t3.micro PostgreSQL instance for development"
+
+---
+
+## Using Context
+
+Kyrna understands context from previous prompts in the conversation:
+
+```
+You: "Create a VPC with public and private subnets"
+AI: [Creates VPC with subnets]
+
+You: "Add a web server in the public subnet"
+AI: [Creates EC2 in the VPC you just created]
+
+You: "Add a database in the private subnet"
+AI: [Creates RDS in the private subnet of same VPC]
+```
+
+---
+
+## Testing Your Prompts
+
+### Start Simple
+1. Try basic prompts first
+2. Review the generated code
+3. Add more details if needed
+
+### Check the Output
+- Does it match your intent?
+- Are security groups configured properly?
+- Are costs reasonable?
+- Are resources in correct subnets/regions?
+
+### Refine
+- Ask for modifications: "Change the instance type to t3.small"
+- Add features: "Add monitoring with CloudWatch alarms"
+- Fix issues: "Make the S3 bucket private"
+
+---
+
+## Quick Reference
+
+| Goal | Prompt Template |
+|------|----------------|
+| **Simple resource** | `Create a [TYPE] [RESOURCE] with [KEY_FEATURE]` |
+| **Complex setup** | `Create a [ARCHITECTURE] with: - [RESOURCE_1] - [RESOURCE_2]` |
+| **Modify existing** | `Add [FEATURE] to the [RESOURCE]` |
+| **Security** | `Create a secure [RESOURCE] with [SECURITY_FEATURES]` |
+| **Cost-optimized** | `Create a cost-effective [RESOURCE] using [SMALL_SIZE]` |
+
+---
+
+## Need Help?
+
+<CardGroup cols={2}>
+  <Card title="Examples" icon="code" href="/examples">
+    See real-world infrastructure examples
+  </Card>
+  <Card title="AI Overview" icon="wand-magic-sparkles" href="/ai-generation/overview">
+    Learn how Kyrna's AI works
+  </Card>
+</CardGroup>

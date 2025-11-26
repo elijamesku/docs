@@ -31,7 +31,14 @@
           {
             "group": "AI Code Generation",
             "pages": [
-              "ai-generation/overview"
+              "ai-generation/overview",
+              "ai-generation/writing-prompts"
+            ]
+          },
+          {
+            "group": "IDE",
+            "pages": [
+              "ide/keyboard-shortcuts"
             ]
           },
           {
