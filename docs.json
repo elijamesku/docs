@@ -78,8 +78,8 @@
     }
   },
   "logo": {
-    "light": "/logo/kyrna-logo.png",
-    "dark": "/logo/kyrna-logo.png",
+    "light": "/logo/kyrna-full-logo.png",
+    "dark": "/logo/kyrna-full-logo.png",
     "href": "https://kyrna.ai"
   },
   "navbar": {
