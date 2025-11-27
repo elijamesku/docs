@@ -9,7 +9,7 @@ This quickstart guide will walk you through creating your first AI-generated inf
 
 <Steps>
   <Step title="Install kyrna">
-    Visit [kyrna.ai](https://kyrna.ai) and sign up with your email or GitHub account.
+    Visit [kyrna.ai](https://kyrna.ai) and authenticate with your GitHub account.
 
     ### Download Kyrna
 
@@ -43,8 +43,8 @@ This quickstart guide will walk you through creating your first AI-generated inf
   <Step title="Create Your First Infrastructure">
     ### Using AI Generation
 
-    1. Click **"New Project"** in Kyrna
-    2. Name your project (e.g., "my-web-app")
+    1. Click **"New Repository"** in Kyrna
+    2. Name your repo (e.g., "my-web-app")
     3. In the AI prompt box, describe what you want:
 
     <CodeGroup>
@@ -86,7 +86,6 @@ This quickstart guide will walk you through creating your first AI-generated inf
     - **Syntax highlighting** for Terraform/HCL
     - **Inline cost annotations** (hover over resources)
     - **Security warnings** (if any issues detected)
-    - 
 
     ![Screenshot 2025-11-26 at 12.07.20 PM.png](/images/Screenshot2025-11-26at12.07.20PM.png)
 
@@ -116,11 +115,11 @@ This quickstart guide will walk you through creating your first AI-generated inf
     </Tip>
   </Step>
   <Step title="Deploy Your Infrastructure">
-    ### Apply Changes
+    ### Create PR
 
-    1. Click **"Apply"** button or press **Cmd+Shift+A**
+    1. Click **"Create Pull Request"** button or press **Cmd+Shift+P**
     2. Confirm the deployment
-    3. Watch real-time progress in the terminal panel
+    3. Watch real-time progress in the chat panel
 
     ```bash
     # Kyrna runs this for you:
@@ -129,7 +128,7 @@ This quickstart guide will walk you through creating your first AI-generated inf
     terraform validate
     ```
 
-    ### Deployment Complete! 
+    ### Deployment Complete!
 
     Once deployed, Kyrna shows:
 
@@ -231,11 +230,6 @@ Here are some popular infrastructure patterns to try:
     - Verify AWS CLI credentials: `aws sts get-caller-identity`
     - Check IAM permissions (needs read-only access)
     - Try re-authenticating in Settings → Cloud Accounts
-  </Accordion>
-  <Accordion title="Cost estimates not showing">
-    - Ensure cloud account is connected
-    - Cost data may take 1-2 minutes to load
-    - Some resources don't have public pricing (will show "Contact AWS")
   </Accordion>
   <Accordion title="Terraform validate failed">
     - Check error message in terminal
