@@ -96,7 +96,8 @@
   "logo": {
     "light": "/logo/kyrna-logo.png",
     "dark": "/logo/kyrna-logo.png",
-    "href": "https://kyrna.ai"
+    "href": "https://kyrna.ai",
+    "height": 36
   },
   "navbar": {
     "links": [
