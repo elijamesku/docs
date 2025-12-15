@@ -1,24 +1,395 @@
 ---
-title: "AWS Support"
+title: 'AWS Infrastructure'
+description: 'Create and manage AWS infrastructure with Terraform'
 ---
 
-## AWS Support
+# AWS Infrastructure Support
 
-Kyrna currently supports AWS only.
+Kyrna supports creating and managing AWS infrastructure using Terraform, with comprehensive support for compute, storage, networking, and more.
 
-**What works:**
-- EC2, RDS, DynamoDB, Lambda
-- S3, EBS, CloudWatch
-- VPC, Subnets, Security Groups
-- ELB, ALB, Route53
-- And more...
+## Current Features
 
-**Cost tracking:** 15+ AWS resource types
+### Cloud Provider Selection
 
-**Status:** Working
+In the chat interface, you can switch between AWS and DigitalOcean using the cloud provider toggle:
 
-## Other Clouds
+- **AWS** (☁️) - Default provider
+- **DigitalOcean** (💧) - Alternative provider
 
-GCP, Azure, and DigitalOcean support is planned but not built yet.
+The toggle appears in the chat input area when in **Ask** or **Agent** mode.
 
-**Current:** AWS only
+### Supported AWS Resources
+
+Kyrna can generate Terraform code for the following AWS resources:
+
+#### Compute
+- `aws_instance` - EC2 instances
+- `aws_launch_template` - EC2 launch templates
+- `aws_autoscaling_group` - Auto Scaling groups
+- `aws_ecs_cluster` - ECS clusters
+- `aws_ecs_service` - ECS services
+- `aws_ecs_task_definition` - ECS task definitions
+- `aws_eks_cluster` - EKS Kubernetes clusters
+- `aws_eks_node_group` - EKS node groups
+- `aws_lambda_function` - Lambda functions
+- `aws_lambda_layer` - Lambda layers
+- `aws_batch_job_definition` - Batch job definitions
+
+#### Database
+- `aws_db_instance` - RDS database instances
+- `aws_db_cluster` - RDS Aurora clusters
+- `aws_dynamodb_table` - DynamoDB tables
+- `aws_elasticache_cluster` - ElastiCache clusters
+- `aws_redshift_cluster` - Redshift clusters
+- `aws_docdb_cluster` - DocumentDB clusters
+
+#### Storage
+- `aws_s3_bucket` - S3 buckets
+- `aws_s3_bucket_object` - S3 objects
+- `aws_ebs_volume` - EBS volumes
+- `aws_efs_file_system` - EFS file systems
+- `aws_fsx_lustre_file_system` - FSx for Lustre
+- `aws_glacier_vault` - Glacier vaults
+
+#### Networking
+- `aws_vpc` - Virtual Private Clouds
+- `aws_subnet` - Subnets
+- `aws_internet_gateway` - Internet gateways
+- `aws_nat_gateway` - NAT gateways
+- `aws_route_table` - Route tables
+- `aws_security_group` - Security groups
+- `aws_network_acl` - Network ACLs
+- `aws_vpc_peering_connection` - VPC peering
+- `aws_vpn_gateway` - VPN gateways
+- `aws_route53_zone` - Route53 hosted zones
+- `aws_route53_record` - Route53 DNS records
+- `aws_cloudfront_distribution` - CloudFront distributions
+- `aws_api_gateway_rest_api` - API Gateway REST APIs
+- `aws_api_gateway_v2_api` - API Gateway HTTP APIs
+
+#### Load Balancing
+- `aws_elb` - Classic load balancers
+- `aws_lb` - Application and Network load balancers
+- `aws_lb_target_group` - Target groups
+- `aws_lb_listener` - Load balancer listeners
+
+#### Container & Serverless
+- `aws_ecr_repository` - ECR container registries
+- `aws_ecs_cluster` - ECS clusters
+- `aws_eks_cluster` - EKS clusters
+- `aws_lambda_function` - Lambda functions
+- `aws_apigatewayv2_api` - API Gateway v2
+
+#### Monitoring & Logging
+- `aws_cloudwatch_log_group` - CloudWatch log groups
+- `aws_cloudwatch_metric_alarm` - CloudWatch alarms
+- `aws_cloudwatch_dashboard` - CloudWatch dashboards
+- `aws_sns_topic` - SNS topics
+- `aws_sns_subscription` - SNS subscriptions
+- `aws_sqs_queue` - SQS queues
+
+#### Security & Identity
+- `aws_iam_role` - IAM roles
+- `aws_iam_policy` - IAM policies
+- `aws_iam_user` - IAM users
+- `aws_iam_group` - IAM groups
+- `aws_secretsmanager_secret` - Secrets Manager secrets
+- `aws_kms_key` - KMS encryption keys
+- `aws_acm_certificate` - ACM certificates
+- `aws_wafv2_web_acl` - WAF web ACLs
+
+#### Other
+- `aws_s3_bucket_notification` - S3 event notifications
+- `aws_cloudwatch_event_rule` - EventBridge rules
+- `aws_cloudwatch_event_target` - EventBridge targets
+- `aws_sfn_state_machine` - Step Functions state machines
+- `aws_codebuild_project` - CodeBuild projects
+- `aws_codepipeline` - CodePipeline pipelines
+
+### Cost Estimation
+
+Kyrna provides cost estimation for AWS resources:
+
+- **EC2 Instances:** Based on instance type and region (t3.micro = ~$7.50/month, t3.small = ~$15/month, m5.large = ~$70/month, etc.)
+- **RDS Databases:** Based on instance class and engine (db.t3.micro = ~$15/month, db.r5.large = ~$200/month)
+- **S3 Storage:** Based on storage class and usage (Standard = $0.023/GB/month, Glacier = $0.004/GB/month)
+- **EBS Volumes:** Based on type and size (gp3 = $0.08/GB/month, io1 = $0.125/GB/month)
+- **Load Balancers:** ALB = ~$16/month + data transfer, NLB = ~$16/month + data transfer
+- **Lambda:** $0.20 per 1M requests + compute time
+- **Data Transfer:** Varies by region and volume
+- **VPC, Subnets, Security Groups:** Free
+
+Cost estimates appear when generating infrastructure in Agent mode.
+
+### Security Scanning
+
+Kyrna automatically checks AWS resources for security issues:
+
+- EC2 instances without VPC protection
+- Security groups allowing all inbound traffic (0.0.0.0/0)
+- Public S3 buckets
+- Publicly accessible RDS databases
+- Load balancers without HTTPS
+- Missing encryption at rest
+- IAM policies with overly permissive permissions
+- Missing CloudTrail logging
+- Unencrypted EBS volumes
+- Missing backup configurations
+- Missing monitoring and alerting
+
+Security suggestions appear in the chat interface when viewing repositories with existing infrastructure.
+
+## Usage
+
+### Creating AWS Infrastructure
+
+1. **Select AWS Provider:**
+   - Click the cloud provider toggle in chat (☁️/💧)
+   - Ensure AWS (☁️) is selected (default)
+
+2. **Generate Infrastructure:**
+   - In **Agent mode**, describe what you want to create
+   - Example: "Create a t3.micro EC2 instance with PostgreSQL RDS database in us-east-1"
+
+3. **Review Generated Code:**
+   - Kyrna generates Terraform files
+   - Review the diffs in the editor
+   - Accept or modify as needed
+
+4. **Create Pull Request:**
+   - Click "Push & Create Pull Request"
+   - Terraform files are committed and pushed to GitHub
+   - PR is created for review
+
+### Example Prompts
+
+**EC2 Instance:**
+```
+Create a t3.micro Ubuntu EC2 instance in us-east-1 with a security group allowing SSH and HTTP
+```
+
+**RDS Database:**
+```
+Create a PostgreSQL 15 RDS instance (db.t3.micro) in us-east-1 with automated backups
+```
+
+**S3 Bucket:**
+```
+Create an S3 bucket with versioning enabled and lifecycle rules for Glacier
+```
+
+**VPC with Subnets:**
+```
+Create a VPC with CIDR 10.0.0.0/16, two public subnets, two private subnets, and a NAT gateway
+```
+
+**Complete Stack:**
+```
+Create a VPC with two EC2 instances, an RDS PostgreSQL database, an Application Load Balancer, and S3 bucket for logs
+```
+
+**Lambda Function:**
+```
+Create a Python Lambda function that processes S3 uploads with CloudWatch logging
+```
+
+## Terraform Code Generation
+
+Kyrna generates proper Terraform HCL for AWS:
+
+```hcl
+# Example: EC2 Instance
+resource "aws_instance" "web_server" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t3.micro"
+  subnet_id     = aws_subnet.public.id
+  vpc_security_group_ids = [aws_security_group.web.id]
+  
+  tags = {
+    Name        = "web-server-1"
+    Environment = "production"
+  }
+}
+
+# Example: RDS Database
+resource "aws_db_instance" "main_db" {
+  identifier     = "main-database"
+  engine         = "postgres"
+  engine_version = "15.4"
+  instance_class = "db.t3.micro"
+  allocated_storage = 20
+  
+  db_name  = "mydb"
+  username = "admin"
+  password = var.db_password
+  
+  vpc_security_group_ids = [aws_security_group.db.id]
+  db_subnet_group_name   = aws_db_subnet_group.main.name
+  
+  backup_retention_period = 7
+  backup_window          = "03:00-04:00"
+  
+  tags = {
+    Name = "main-database"
+  }
+}
+
+# Example: S3 Bucket
+resource "aws_s3_bucket" "app_logs" {
+  bucket = "my-app-logs-bucket"
+  
+  versioning {
+    enabled = true
+  }
+  
+  lifecycle_rule {
+    id      = "archive-to-glacier"
+    enabled = true
+    
+    transition {
+      days          = 30
+      storage_class = "GLACIER"
+    }
+  }
+  
+  tags = {
+    Name        = "app-logs"
+    Environment = "production"
+  }
+}
+```
+
+## Regions
+
+Supported AWS regions:
+- `us-east-1` - N. Virginia (default)
+- `us-east-2` - Ohio
+- `us-west-1` - N. California
+- `us-west-2` - Oregon
+- `eu-west-1` - Ireland
+- `eu-west-2` - London
+- `eu-west-3` - Paris
+- `eu-central-1` - Frankfurt
+- `ap-southeast-1` - Singapore
+- `ap-southeast-2` - Sydney
+- `ap-northeast-1` - Tokyo
+- `ap-south-1` - Mumbai
+- `ca-central-1` - Canada
+- `sa-east-1` - São Paulo
+
+## EC2 Instance Types
+
+Common EC2 instance types:
+
+### General Purpose
+- `t3.micro` - 1 vCPU, 1 GB RAM - ~$7.50/month
+- `t3.small` - 2 vCPU, 2 GB RAM - ~$15/month
+- `t3.medium` - 2 vCPU, 4 GB RAM - ~$30/month
+- `t3.large` - 2 vCPU, 8 GB RAM - ~$60/month
+- `m5.large` - 2 vCPU, 8 GB RAM - ~$70/month
+- `m5.xlarge` - 4 vCPU, 16 GB RAM - ~$140/month
+
+### Compute Optimized
+- `c5.large` - 2 vCPU, 4 GB RAM - ~$68/month
+- `c5.xlarge` - 4 vCPU, 8 GB RAM - ~$136/month
+
+### Memory Optimized
+- `r5.large` - 2 vCPU, 16 GB RAM - ~$126/month
+- `r5.xlarge` - 4 vCPU, 32 GB RAM - ~$252/month
+
+## RDS Instance Classes
+
+Common RDS instance classes:
+- `db.t3.micro` - 1 vCPU, 1 GB RAM - ~$15/month
+- `db.t3.small` - 2 vCPU, 2 GB RAM - ~$30/month
+- `db.t3.medium` - 2 vCPU, 4 GB RAM - ~$60/month
+- `db.r5.large` - 2 vCPU, 16 GB RAM - ~$200/month
+- `db.r5.xlarge` - 4 vCPU, 32 GB RAM - ~$400/month
+
+## Current Limitations
+
+- **Manual Deployment Required:** Currently, you need to run `terraform apply` manually after creating PRs
+- **No OAuth Integration:** AWS credentials must be provided manually (see Planned Features below)
+- **Partial Resource Coverage:** While 30+ resource types are supported, some advanced AWS services may require manual configuration
+
+## Planned Features
+
+### AWS OAuth Integration
+
+**Status:** Planned
+
+Users will be able to connect their AWS account via OAuth/IAM role assumption:
+
+1. User clicks "Connect AWS" in Settings
+2. Configure IAM role or access keys
+3. Token stored securely (encrypted)
+4. No manual credential entry required
+
+### Auto-Deploy After PR Merge
+
+**Status:** Planned
+
+Infrastructure will automatically deploy to AWS after PRs are merged:
+
+1. User creates Terraform files in Kyrna
+2. User creates PR (existing flow)
+3. User merges PR on GitHub
+4. GitHub webhook triggers Kyrna backend
+5. Backend uses stored credentials to run `terraform apply`
+6. Infrastructure automatically deployed
+
+**Workflow:**
+```
+Create Terraform files → Create PR → Merge PR → Auto-deploy to AWS
+```
+
+This eliminates the need for manual `terraform apply` commands.
+
+### AWS Import Enhancement
+
+**Status:** Planned
+
+Enhanced AWS import capabilities:
+- Direct AWS API integration (with user permission)
+- Bulk import from existing infrastructure
+- State file synchronization
+- Drift detection and remediation
+
+## Comparison: AWS vs DigitalOcean
+
+| Feature | AWS | DigitalOcean |
+|---------|-----|--------------|
+| **Provider Toggle** | ✅ | ✅ |
+| **Cost Estimation** | ✅ | ✅ |
+| **Security Scanning** | ✅ | ✅ |
+| **Resource Support** | 30+ resources | 18+ resources |
+| **Regions** | 20+ regions | 8 regions |
+| **Instance Types** | 100+ types | 6+ sizes |
+| **OAuth Integration** | Planned | Planned |
+| **Auto-Deploy** | Planned | Planned |
+
+Both providers are fully supported for Terraform code generation. Choose based on your infrastructure needs:
+- **AWS**: Enterprise-scale, extensive service ecosystem, global presence
+- **DigitalOcean**: Simpler pricing, developer-friendly, faster setup
+
+## Getting Started
+
+1. **Ensure AWS Provider:**
+   - Open chat panel
+   - Verify cloud provider toggle shows AWS (☁️) - this is the default
+
+2. **Create Infrastructure:**
+   - Use Agent mode
+   - Describe what you want to create
+   - Review and accept generated code
+
+3. **Deploy:**
+   - Create PR (existing flow)
+   - Merge PR on GitHub
+   - Run `terraform apply` manually (until auto-deploy is available)
+
+## Related Documentation
+
+- [AWS Import Guide](./aws-import-guide) - Importing existing AWS infrastructure
+- [How AWS Import Works](./how-aws-import-works) - Technical deep dive
+- [DigitalOcean Infrastructure](./digitalocean) - DigitalOcean support
