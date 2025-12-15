@@ -13,7 +13,7 @@ Kyrna tracks AWS costs in real-time while you write Terraform code.
 
 <CardGroup cols={2}>
   <Card title="Per-Resource Cost" icon="tag">
-    Each AWS resource shows its monthly cost
+    Each AWS resource shows its cost
   </Card>
   <Card title="Total Cost" icon="calculator">
     Sum of all resources in your project
@@ -45,19 +45,16 @@ resource "aws_db_instance" "main" {
     - Lambda functions
     - ECS Fargate
   </Accordion>
-  
   <Accordion title="Storage">
     - S3 buckets
     - EBS volumes
     - EFS file systems
   </Accordion>
-  
   <Accordion title="Database">
     - RDS instances (all engines)
     - DynamoDB tables
     - ElastiCache
   </Accordion>
-  
   <Accordion title="Networking">
     - Application Load Balancers
     - Network Load Balancers
@@ -69,11 +66,12 @@ resource "aws_db_instance" "main" {
 
 <Warning>
   **AWS Only**
-  
+
   Currently only supports AWS. GCP, Azure, and DigitalOcean support coming later.
 </Warning>
 
 **What's NOT included:**
+
 - Data transfer costs (highly variable)
 - API request costs
 - Reserved Instance discounts

@@ -12,6 +12,7 @@ Kyrna's AI understands natural language, but the more specific you are, the bett
 ## Basic Prompt Structure
 
 ### Good Prompts Include:
+
 - **Resource type** (EC2, RDS, S3, etc.)
 - **Configuration details** (instance type, storage size)
 - **Purpose** (what it's for)
@@ -21,7 +22,8 @@ Kyrna's AI understands natural language, but the more specific you are, the bett
 
 ## Examples
 
-### ❌ Bad Prompt
+### Bad Prompt
+
 ```
 Create a server
 ```
@@ -30,7 +32,8 @@ Create a server
 
 ---
 
-### ✅ Good Prompt
+### Good Prompt
+
 ```
 Create a t3.micro EC2 instance running Amazon Linux 2 
 with a public IP address for a web application
@@ -40,7 +43,8 @@ with a public IP address for a web application
 
 ---
 
-### ⭐ Excellent Prompt
+### Excellent Prompt
+
 ```
 Create a production web server setup with:
 - t3.medium EC2 instance in us-east-1
@@ -116,6 +120,7 @@ Create a secure web server with:
 ### EC2 Instances
 
 **Include:**
+
 - Instance type (`t3.micro`, `m5.large`)
 - AMI or OS (`Amazon Linux 2`, `Ubuntu 22.04`)
 - Networking (`public IP`, `private subnet`)
@@ -123,6 +128,7 @@ Create a secure web server with:
 - Security groups (which ports to allow)
 
 **Example:**
+
 ```
 Create a t3.small EC2 instance with Amazon Linux 2, 
 30GB gp3 root volume, and security group allowing 
@@ -134,6 +140,7 @@ HTTP/HTTPS from anywhere and SSH from my IP
 ### RDS Databases
 
 **Include:**
+
 - Engine and version (`PostgreSQL 15`, `MySQL 8.0`)
 - Instance class (`db.t3.micro`, `db.r6g.large`)
 - Storage size (`20GB`, `100GB`)
@@ -141,6 +148,7 @@ HTTP/HTTPS from anywhere and SSH from my IP
 - Backup retention
 
 **Example:**
+
 ```
 Create a PostgreSQL 15 RDS instance (db.t3.medium) with 
 50GB storage, multi-AZ enabled, 7-day backup retention, 
@@ -152,6 +160,7 @@ and a read replica in us-west-2
 ### S3 Buckets
 
 **Include:**
+
 - Versioning (`enabled`, `disabled`)
 - Encryption (`AES-256`, `KMS`)
 - Public access (usually `blocked`)
@@ -159,6 +168,7 @@ and a read replica in us-west-2
 - CORS if needed
 
 **Example:**
+
 ```
 Create an S3 bucket for application logs with:
 - Versioning enabled
@@ -172,6 +182,7 @@ Create an S3 bucket for application logs with:
 ### VPC & Networking
 
 **Include:**
+
 - CIDR block (`10.0.0.0/16`)
 - Number of subnets
 - Public vs private subnets
@@ -179,6 +190,7 @@ Create an S3 bucket for application logs with:
 - Route tables
 
 **Example:**
+
 ```
 Create a VPC (10.0.0.0/16) with:
 - 2 public subnets (10.0.1.0/24, 10.0.2.0/24)
@@ -234,24 +246,24 @@ Examples:
 ## Common Mistakes to Avoid
 
 ### 1. Being Too Vague
-❌ "Create a database"
-✅ "Create a PostgreSQL 15 RDS instance (db.t3.micro) with 20GB storage"
+
+❌ "Create a database" ✅ "Create a PostgreSQL 15 RDS instance (db.t3.micro) with 20GB storage"
 
 ### 2. Missing Security Requirements
-❌ "Create an EC2 instance"
-✅ "Create an EC2 instance with security group allowing only SSH from my IP"
+
+❌ "Create an EC2 instance" ✅ "Create an EC2 instance with security group allowing only SSH from my IP"
 
 ### 3. No Resource Sizing
-❌ "Create a server"
-✅ "Create a t3.medium EC2 instance"
+
+❌ "Create a server" ✅ "Create a t3.medium EC2 instance"
 
 ### 4. Forgetting Networking
-❌ "Create a web server"
-✅ "Create a web server in public subnet with public IP"
+
+❌ "Create a web server" ✅ "Create a web server in public subnet with public IP"
 
 ### 5. Ignoring Costs
-❌ "Create a powerful database"
-✅ "Create a db.t3.micro PostgreSQL instance for development"
+
+❌ "Create a powerful database" ✅ "Create a db.t3.micro PostgreSQL instance for development"
 
 ---
 
@@ -275,17 +287,20 @@ AI: [Creates RDS in the private subnet of same VPC]
 ## Testing Your Prompts
 
 ### Start Simple
+
 1. Try basic prompts first
 2. Review the generated code
 3. Add more details if needed
 
 ### Check the Output
+
 - Does it match your intent?
 - Are security groups configured properly?
 - Are costs reasonable?
 - Are resources in correct subnets/regions?
 
 ### Refine
+
 - Ask for modifications: "Change the instance type to t3.small"
 - Add features: "Add monitoring with CloudWatch alarms"
 - Fix issues: "Make the S3 bucket private"
@@ -294,13 +309,13 @@ AI: [Creates RDS in the private subnet of same VPC]
 
 ## Quick Reference
 
-| Goal | Prompt Template |
-|------|----------------|
-| **Simple resource** | `Create a [TYPE] [RESOURCE] with [KEY_FEATURE]` |
-| **Complex setup** | `Create a [ARCHITECTURE] with: - [RESOURCE_1] - [RESOURCE_2]` |
-| **Modify existing** | `Add [FEATURE] to the [RESOURCE]` |
-| **Security** | `Create a secure [RESOURCE] with [SECURITY_FEATURES]` |
-| **Cost-optimized** | `Create a cost-effective [RESOURCE] using [SMALL_SIZE]` |
+| Goal                | Prompt Template                                               |
+| ------------------- | ------------------------------------------------------------- |
+| **Simple resource** | `Create a [TYPE] [RESOURCE] with [KEY_FEATURE]`               |
+| **Complex setup**   | `Create a [ARCHITECTURE] with: - [RESOURCE_1] - [RESOURCE_2]` |
+| **Modify existing** | `Add [FEATURE] to the [RESOURCE]`                             |
+| **Security**        | `Create a secure [RESOURCE] with [SECURITY_FEATURES]`         |
+| **Cost-optimized**  | `Create a cost-effective [RESOURCE] using [SMALL_SIZE]`       |
 
 ---
 

@@ -15,15 +15,12 @@ Type what you want in plain English. Kyrna's AI generates Terraform code.
   <Step title="You Describe">
     Type what infrastructure you need in natural language
   </Step>
-  
   <Step title="AI Generates">
-    Claude 3.5 Sonnet or GPT-4 creates Terraform code
+    Claude Opus 4.5 or GPT-5 creates Terraform code
   </Step>
-  
   <Step title="You Review">
     See generated code, costs, and security issues
   </Step>
-  
   <Step title="You Deploy">
     Approve and deploy
   </Step>
@@ -32,11 +29,13 @@ Type what you want in plain English. Kyrna's AI generates Terraform code.
 ## AI Models
 
 **Claude 3.5 Sonnet** (recommended)
+
 - Better for infrastructure code
 - More accurate resource configs
 - Default model
 
 **GPT-4** (alternative)
+
 - Also works well
 - Fallback option
 
@@ -45,6 +44,7 @@ Type what you want in plain English. Kyrna's AI generates Terraform code.
 ## What It Can Generate
 
 **AWS Resources:**
+
 - EC2 instances
 - RDS databases
 - S3 buckets
@@ -61,6 +61,7 @@ Type what you want in plain English. Kyrna's AI generates Terraform code.
 ## Example
 
 **Simple:**
+
 ```
 You: "Create a web server"
 
@@ -71,6 +72,7 @@ Kyrna generates:
 ```
 
 **Complex:**
+
 ```
 You: "Create a production web app with database and load balancer"
 
@@ -86,21 +88,22 @@ Kyrna generates:
 
 ## Current Capabilities
 
-✅ **Multi-resource generation** (multiple resources at once)  
-✅ **Context-aware** (understands relationships)  
-✅ **Best practices** (secure defaults)  
-✅ **Cost-optimized** (reasonable instance sizes)  
+✅ **Multi-resource generation** (multiple resources at once)\
+✅ **Context-aware** (understands relationships)\
+✅ **Best practices** (secure defaults)\
+✅ **Cost-optimized** (reasonable instance sizes)
 
 ## Current Limitations
 
-❌ **AWS only** (no GCP, Azure, DigitalOcean)  
-❌ **Terraform only** (no Pulumi, CDK, CloudFormation)  
-❌ **English only** (no other languages)  
-❌ **May need refinement** (MVP, not perfect)  
+❌ **AWS only** (no GCP, Azure, DigitalOcean)\
+❌ **Terraform only** (no Pulumi, CDK, CloudFormation)\
+❌ **English only** (no other languages)\
+❌ **May need refinement** (MVP, not perfect)
 
 ## Accuracy
 
 **What to expect:**
+
 - Usually generates correct code
 - May need small tweaks
 - Follows Terraform best practices
