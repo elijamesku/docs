@@ -1,8 +1,46 @@
 ---
 title: "Cost Comparison"
+description: "Compare infrastructure options before you choose"
 ---
-## Cost Comparison
 
-Compare different infrastructure options.
+# Cost Comparison
 
-(Content coming soon)
+Compare multiple designs or instance sizes before committing them to code.
+
+## What You Can Compare
+- Instance sizes (t3.micro vs t3.small vs m5.large)
+- Storage classes (S3 Standard vs Glacier, Spaces tiers)
+- Databases (RDS vs Aurora vs DO Managed DBs)
+- Load balancers (ALB vs NLB; DO LB sizing)
+- Compute models (EC2 On-Demand vs Spot; ECS Fargate vs EC2)
+- Region differences (us-east-1 vs eu-west-1 vs ap-southeast-1)
+
+## How to Use
+1. In chat, ask: **"Compare cost of a t3.micro vs t3.small web tier in us-east-1"**
+2. Kyrna returns a table with monthly/hourly estimates and key notes (performance, limits).
+3. Pick an option, then ask Kyrna to generate Terraform for that choice.
+
+## Example Output
+```
+Option              Hourly    Monthly   Notes
+---------------------------------------------------------
+t3.micro ALB stack  $0.03     ~$21     Good for low traffic; 1 vCPU / 1GB
+m5.large ALB stack  $0.21     ~$150    Higher throughput; 2 vCPU / 8GB
+Spot m5.large       ~$0.06    ~$43     70%+ cheaper; interruptions possible
+```
+
+## Tips
+- Always factor **egress** if cross-region or internet-heavy.
+- Use **spot** for stateless/CI; avoid for stateful DBs.
+- For DO, start with smaller droplets and scale node pools.
+- Check **storage + backup + data transfer** together; they often exceed compute.
+
+## Current Status
+- Supports AWS and DigitalOcean comparisons.
+- Estimates from pricing APIs; excludes unpredictable egress/API request costs.
+- Coming soon: saved comparison presets and team-shared templates.
+
+## Related
+- Real-time tracking → `/cost/real-time-tracking`
+- Budgets & alerts → `/cost/budgets-alerts`
+- Optimization → `/cost/optimization`

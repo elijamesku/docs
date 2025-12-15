@@ -1,8 +1,61 @@
 ---
 title: "Cost Optimization"
+description: "Practical ways to reduce AWS and DigitalOcean spend"
 ---
-## Cost Optimization
 
-Learn strategies to reduce infrastructure costs.
+# Cost Optimization
 
-(Content coming soon)
+Actionable steps to lower your cloud bill while using Kyrna.
+
+## Quick Wins (Do These First)
+- **Right-size instances:** Start with smaller EC2/Droplet sizes; scale up only if needed.
+- **Turn off idle:** Auto-stop non-prod at night/weekends; tag with `env=dev` to target schedules.
+- **Use managed services wisely:** Prefer RDS/Aurora/DO Databases over self-managed VMs when ops cost dominates.
+- **Lifecycle policies:** Move S3/Spaces objects to cheaper storage after 30 days; delete unused snapshots.
+- **Consolidate NAT/LB:** Share NAT gateways and load balancers across services where possible.
+
+## Kyrna Features That Help
+- **Real-time estimates:** See per-resource and total cost before committing.
+- **Cost diffing:** Review cost deltas in PRs alongside Terraform changes.
+- **Optimization prompts:** Ask the agent: "Optimize this VPC stack for cost" to resize, compress storage, and reduce NAT/LB count.
+- **Policy checks:** Warnings for costly patterns (public buckets, wide-open SGs, unencrypted disks, idle ALBs/NATs).
+
+## AWS-Specific Tips
+- Prefer **gp3** over gp2; set provisioned IOPS only when required.
+- Use **t3/t4g** for dev/test; switch to **spot** for stateless/CI.
+- Combine services behind a single **ALB**; avoid orphaned LBs and target groups.
+- **NAT gateways:** one per AZ in prod; in dev, use a single NAT where acceptable.
+- **S3:** enable lifecycle to Glacier/IA; block public access by default.
+- **RDS:** enable storage autoscaling; choose Graviton where supported; use shorter backup retention in dev.
+
+## DigitalOcean-Specific Tips
+- Start with smaller **droplets**; add CPU-optimized only when needed.
+- Use **DOKS** node pools with autoscaling; right-size defaults.
+- **Spaces:** enable CDN; lifecycle to transition old objects; avoid unnecessary replicas.
+- **Databases:** choose starter tiers; enable auto-upgrade windows; restrict public access.
+- **Load balancers:** prefer one per environment; clean unused forwarding rules.
+
+## Storage & Data
+- Set **retention** on logs/metrics; route to cheaper tiers after 30–90 days.
+- Compress text assets; avoid duplicating large binaries in multiple buckets.
+- Snapshot policies with expiration; delete unused AMIs/snapshots.
+
+## Networking
+- Limit **egress** by co-locating services; consider private links/peering.
+- Remove unused **elastic/floating IPs**; clean stale DNS records.
+
+## Governance
+- Tag everything: `env`, `team`, `owner`, `cost-center` for attribution.
+- Budgets & alerts per env/team; break-glass escalation when >80/90% of budget.
+- Review monthly: biggest deltas, idle resources, zombie LBs/NATs/volumes.
+
+## How to Use Kyrna to Optimize
+1. **Generate with cost in mind:** Ask the agent to propose a low-cost version.
+2. **Review diffs:** Check cost annotations and warnings before merging.
+3. **Add lifecycle:** Ask Kyrna to add lifecycle rules to S3/Spaces and backups.
+4. **Scan regularly:** Run security/cost scan on repos weekly; fix flagged items.
+
+## Next Steps
+- Set budgets and alerts → `/cost/budgets-alerts`
+- Track costs in real time → `/cost/real-time-tracking`
+- Compare options before choosing → `/cost/cost-comparison`

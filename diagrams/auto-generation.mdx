@@ -1,8 +1,34 @@
 ---
 title: "Auto-Generated Diagrams"
+description: "See your Terraform as diagrams automatically"
 ---
-## Architecture Diagrams
 
-Auto-generate diagrams from your infrastructure code.
+# Auto-Generated Diagrams
 
-(Content coming soon)
+Visualize your infrastructure from Terraform without manual drawing.
+
+## How It Works
+- Kyrna parses your Terraform (AWS + DigitalOcean) and builds a resource graph.
+- Groups by VPC/VNet, subnets, security groups, load balancers, services, data stores.
+- Renders automatically when you generate or import infrastructure.
+
+## What You Get
+- **Network view:** VPC/VNet, subnets, gateways, load balancers, routes.
+- **Service view:** EC2/ECS/EKS, Lambda, RDS, S3; DO droplets, DOKS, DBs, Spaces.
+- **Relations:** Security groups/firewalls, target groups, DNS, dependencies.
+- **Cost & status badges:** Optional overlay for estimated cost and basic health.
+
+## Usage
+1. Generate or import Terraform in Kyrna.
+2. Open the **Diagrams** tab to view the auto-rendered architecture.
+3. Hover nodes for details; click to jump to the Terraform snippet.
+
+## Current Status
+- Providers: AWS, DigitalOcean
+- Updates on each regenerate/import
+- Export: PNG/SVG
+- Coming soon: share links & version diffs
+
+## Related
+- Customization → `/diagrams/customization`
+- Documentation → `/diagrams/documentation`

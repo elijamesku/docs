@@ -1,8 +1,36 @@
 ---
 title: "Auto-Generated Documentation"
+description: "Generate docs from Terraform with zero manual effort"
 ---
-## Documentation
 
-Auto-generate comprehensive documentation.
+# Auto-Generated Documentation
 
-(Content coming soon)
+Create readable docs from your Terraform automatically, including diagrams and cost/security context.
+
+## What It Produces
+- **Resource summaries:** Purpose, key attributes, dependencies.
+- **Architecture diagrams:** Linked views for network and services.
+- **Cost snapshot:** Estimated monthly totals and top contributors.
+- **Security notes:** Public endpoints, open security groups, missing encryption/backups.
+- **Change log:** What changed in this PR compared to main.
+
+## How to Use
+1. Generate or import Terraform in Kyrna.
+2. Open **Docs** for the workspace or PR.
+3. Export as Markdown or share via link.
+
+## Current Status
+- Providers: AWS, DigitalOcean
+- Formats: In-app viewer, Markdown export
+- Includes: Diagrams, cost estimates, security notes, change summary
+- Coming soon: PDF export and custom sections/templates
+
+## Best Practices
+- Attach exported docs to PRs for reviewers.
+- Use as onboarding material for new team members.
+- Pair with budgets/alerts to keep costs visible.
+
+## Related
+- Diagrams → `/diagrams/auto-generation`
+- Cost tracking → `/cost/real-time-tracking`
+- Security scanning → `/security/security-scanning`

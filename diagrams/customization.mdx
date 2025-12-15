@@ -1,8 +1,35 @@
 ---
 title: "Diagram Customization"
+description: "Tweak auto-generated diagrams to fit your needs"
 ---
-## Customization
 
-Customize your architecture diagrams.
+# Diagram Customization
 
-(Content coming soon)
+Control how your auto-generated diagrams look and what they show.
+
+## Controls
+- **Layouts:** Toggle network-first vs service-first grouping.
+- **Layers:** Show/hide networking (VPC/VNet, subnets), security (SGs/firewalls), data, compute.
+- **Badges:** Toggle cost overlays, warnings (public buckets, wide-open SGs), health hints.
+- **Labels:** Friendly names vs Terraform resource addresses.
+- **Focus:** Filter by environment, tag, or module.
+
+## How to Use
+1. Open the diagram and click **Customize**.
+2. Select layout (Network | Services) and layers to display.
+3. Enable/disable cost and warning badges as needed.
+4. Save as a **view preset** for your team (coming soon).
+
+## Current Status
+- Available for AWS and DigitalOcean diagrams.
+- Exports honor your current view (PNG/SVG).
+- Coming soon: saved presets, shareable links, and dark/light theme toggles.
+
+## Tips
+- Start with **network view** to validate routing and exposure.
+- Turn on **warnings** when reviewing security posture.
+- Use **labels → friendly names** for stakeholder reviews.
+
+## Related
+- Auto-generation → `/diagrams/auto-generation`
+- Documentation → `/diagrams/documentation`

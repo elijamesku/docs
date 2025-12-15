@@ -1,8 +1,53 @@
 ---
 title: "Budgets & Alerts"
+description: "Set spend guardrails and alerts for AWS and DigitalOcean"
 ---
-## Budgets & Alerts
 
-Set budgets and get notified before overspending.
+# Budgets & Alerts
 
-(Content coming soon)
+Set monthly budgets, get alerts before overruns, and see which resources drive spend.
+
+## How It Works
+- Define **budget** per workspace, repo, or team (monthly cap).
+- Kyrna sums projected monthly cost from your Terraform plan + existing resources.
+- Alerts trigger at thresholds (default **70/85/100%**) via email/Slack/Discord.
+- Shows top cost contributors so you know what to cut.
+
+## Setup
+1. Open **Cost → Budgets** in Kyrna.
+2. Set scope: `workspace`, `team`, or `repo`.
+3. Enter monthly limit (e.g., `$500`).
+4. Choose channels: Email, Slack webhook, Discord webhook.
+5. Pick thresholds (or keep defaults 70/85/100%).
+6. Save — alerts start immediately.
+
+## Example
+```
+Budget: $500/month
+Current forecast: $425 (85%) → ⚠️ Alert
+Top drivers:
+- ALB (prod): $46
+- NAT (prod): $36
+- RDS db.r5.large (prod): $210
+```
+
+## Best Practices
+- Separate budgets per **env** (dev/stage/prod) and **team**.
+- Lower thresholds for dev (e.g., 50/70/90%) to catch waste early.
+- Tag resources with `env`, `team`, `owner` for accurate grouping.
+- Pair budgets with **lifecycle rules** (S3/Spaces) and **shutdown schedules** for dev.
+
+## Current Status
+- **Providers:** AWS, DigitalOcean
+- **Notifications:** Email, Slack, Discord
+- **Costs:** Estimates (pricing APIs), not actual cloud bills
+- **Coming soon:** GCP/Azure, anomaly detection, daily spend burn alerts
+
+## Troubleshooting
+- If no alerts: check webhooks, thresholds, and that cost estimation is enabled.
+- If numbers look off: refresh pricing; note that data transfer/API request costs are excluded.
+
+## Related
+- Real-time tracking → `/cost/real-time-tracking`
+- Optimization → `/cost/optimization`
+- Cost comparison → `/cost/cost-comparison`
