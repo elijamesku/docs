@@ -5,7 +5,7 @@ description: "Overview of what we've built"
 
 ## Overview
 
-Kyrna is an AI-powered platform for infrastructure code generation. We help you write Terraform faster than ever using natural language, with real-time cost tracking and security scanning built-in.
+Kyrna is an AI-powered platform for infrastructure code generation. We help you write Terraform faster than ever using natural language, with real-time cost tracking, security scanning, and **real-time team collaboration** built-in.
 
 **Current Status:** MVP with working features, building toward a complete cloud operating system.
 
@@ -74,18 +74,68 @@ AWS only with GCP + Azure coming soon!
 - Diagram generation (from Terraform)
 - Documentation generation (from Terraform)
 
+### 5. Real-Time Team Collaboration
+
+**What it does:**
+
+- Google Docs-style real-time collaboration for infrastructure
+- See teammates' changes live
+- Live presence indicators (who's editing what)
+- Conflict prevention and warnings
+- Team PR workflow (collaborative pull requests)
+
+**Status:** MVP with presence tracking and file activity
+
+### 6. Team Management
+
+**What it does:**
+
+- Create teams and invite members
+- Role-based access control (Admin, Developer, Viewer)
+- Shared repositories across teams
+- Team billing and subscriptions
+- Email invitations with secure tokens
+
+**Status:** Working
+
+### 7. Multi-Cloud Support
+
+**What it does:**
+
+- AWS infrastructure generation (30+ resource types)
+- DigitalOcean infrastructure generation (18+ resource types)
+- Cloud provider toggle in chat interface
+- Cost estimation for both providers
+- Security scanning for both providers
+
+**Status:** AWS fully supported, DigitalOcean fully supported
+
+### 8. AWS Infrastructure Import
+
+**What it does:**
+
+- Convert existing AWS infrastructure to Terraform
+- Import from AWS CLI output, CloudFormation, AWS Config
+- No AWS credentials required on our side
+- Natural language descriptions supported
+- Batch import capabilities
+
+**Status:** Working
+
 ## Who Uses Kyrna
 
 **Current users:**
 
-- Individual developers usingTerraform
-- Small teams building + managing AWS infrastructure
+- Individual developers using Terraform
+- Small teams building + managing AWS/DigitalOcean infrastructure
+- Teams collaborating on infrastructure in real-time
 - Engineers that desire to deploy infra
+- Teams migrating existing AWS infrastructure to Terraform
 
 **Coming soon:**
 
 - Large enterprises (SSO/RBAC)
-- Multi-cloud teams
+- Additional cloud providers (GCP, Azure)
 
 ## Pricing
 

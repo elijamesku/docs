@@ -16,7 +16,8 @@ Generate Terraform from natural language.
 - Claude 4.5 Sonnet or GPT-5
 - Natural language \>\> Terraform
 - Multi-resource generation
-- AWS services (EC2, RDS, S3, VPC, Lambda, etc.)
+- AWS services (30+ resource types)
+- DigitalOcean services (18+ resource types)
 
 **Status:** Working
 
@@ -28,18 +29,19 @@ Generate Terraform from natural language.
 
 ### Cost Tracking
 
-Real-time AWS cost estimates while you code.
+Real-time cost estimates while you code.
 
 **What works:**
 
-- 15+ AWS resource types
+- 30+ AWS resource types
+- 18+ DigitalOcean resource types
 - Monthly/hourly costs
 - Per-resource breakdown
 - Budget alerts
 
 **Limitations:**
 
-- AWS only (no GCP/Azure)
+- AWS and DigitalOcean only (GCP/Azure coming soon)
 - Estimates only (not actual bills)
 
 **Status:** Working
@@ -93,6 +95,85 @@ Auto-generate from Terraform code.
 - GitHub integration
 
 **Status:** Basic (improving)
+
+---
+
+### Real-Time Team Collaboration
+
+Collaborate on infrastructure like Google Docs.
+
+**What works:**
+
+- Live presence tracking (who's online, what they're editing)
+- Real-time file activity notifications
+- Conflict prevention warnings
+- Team PR workflow (collaborative pull requests)
+
+**Status:** MVP with presence and file activity
+
+<Card title="Learn More" icon="users" href="/collaboration/real-time-collaboration">
+  Collaboration docs →
+</Card>
+
+---
+
+### Team Management
+
+Organize teams with role-based access control.
+
+**What works:**
+
+- Create teams and invite members
+- Role-based access (Admin, Developer, Viewer)
+- Shared repositories
+- Team billing and subscriptions
+- Email invitations
+
+**Status:** Working
+
+<Card title="Learn More" icon="user-group" href="/teams/team-management">
+  Team management docs →
+</Card>
+
+---
+
+### Multi-Cloud Support
+
+Generate infrastructure for AWS and DigitalOcean.
+
+**What works:**
+
+- AWS (30+ resource types)
+- DigitalOcean (18+ resource types)
+- Cloud provider toggle in chat
+- Cost estimation for both
+- Security scanning for both
+
+**Status:** Working
+
+<Card title="Learn More" icon="cloud" href="/multi-cloud/aws">
+  Cloud support docs →
+</Card>
+
+---
+
+### AWS Infrastructure Import
+
+Convert existing AWS infrastructure to Terraform.
+
+**What works:**
+
+- Import from AWS CLI output
+- Import from CloudFormation templates
+- Import from AWS Config snapshots
+- Natural language descriptions
+- No AWS credentials required
+
+**Status:** Working
+
+<Card title="Learn More" icon="download" href="/multi-cloud/aws-import-guide">
+  AWS import docs →
+</Card>
 
 ---
 

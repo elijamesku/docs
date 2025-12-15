@@ -3,21 +3,30 @@ title: "Welcome to Kyrna Documentation"
 description: "AI-powered infrastructure development platform"
 ---
 
-Welcome to Kyrna Docs. Kyrna is an AI-powered platform for infrastructure code generation with built-in cost tracking and security scanning.
+Welcome to Kyrna Docs. Kyrna is an AI-powered platform for infrastructure code generation with built-in cost tracking, security scanning, and **real-time team collaboration**.
 
 ## What is Kyrna?
 
-Kyrna helps you write infrastructure code faster using AI. Type what you want in natural language, and Kyrna generates production-ready Terraform code.
+Kyrna helps you write infrastructure code faster using AI. Type what you want in natural language, and Kyrna generates production-ready Terraform code. Collaborate with your team in real-time, manage infrastructure across AWS and DigitalOcean, and import existing infrastructure.
 
 <CardGroup cols={3}>
   <Card title="AI Generation" icon="wand-magic-sparkles" color="#6366F1">
     Natural language → Terraform. Uses Claude 4.5 Sonnet or GPT-5.
   </Card>
   <Card title="Cost Tracking" icon="chart-line" color="#10B981">
-    See real-time AWS costs while you code. 15+ resource types tracked.
+    See real-time costs while you code. AWS & DigitalOcean supported.
   </Card>
   <Card title="Security Scanning" icon="shield-check" color="#EF4444">
     Automatic security and drift detection before deployment.
+  </Card>
+  <Card title="Team Collaboration" icon="users" color="#8B5CF6">
+    Real-time collaboration like Google Docs for infrastructure.
+  </Card>
+  <Card title="Multi-Cloud" icon="cloud" color="#06B6D4">
+    Generate infrastructure for AWS and DigitalOcean.
+  </Card>
+  <Card title="AWS Import" icon="download" color="#F59E0B">
+    Convert existing AWS infrastructure to Terraform.
   </Card>
 </CardGroup>
 
@@ -34,8 +43,9 @@ What's implemented and working:
 
 ### Cost Intelligence
 
-- Real-time AWS cost estimation
-- 15+ AWS resource types supported
+- Real-time cost estimation for AWS and DigitalOcean
+- 30+ AWS resource types supported
+- 18+ DigitalOcean resource types supported
 - Per-resource cost breakdown
 - Budget alerts
 
@@ -53,21 +63,39 @@ What's implemented and working:
 - Architecture diagram generation
 - Documentation generation
 
-### Supported Platform
+### Team Collaboration
 
-- **Cloud Provider:** AWS (only)
-- **IaC Language:** Terraform (only)
+- Real-time presence tracking
+- Live file activity notifications
+- Team PR workflow (collaborative pull requests)
+- Conflict prevention
+
+### Team Management
+
+- Create teams and invite members
+- Role-based access control (Admin, Developer, Viewer)
+- Shared repositories
+- Team billing and subscriptions
+
+### Supported Platforms
+
+- **Cloud Providers:** AWS (30+ resources), DigitalOcean (18+ resources)
+- **IaC Language:** Terraform
 - **AI Models:** Claude 4.5 Sonnet, GPT-5
+- **Import Formats:** AWS CLI, CloudFormation, AWS Config, Natural Language
 - more soon...
 
 ## What We're Building
 
 This is an MVP. We're working toward a complete cloud operating system, but today you get:
 
-- Working AI code generation
-- Real-time cost tracking
+- Working AI code generation (AWS & DigitalOcean)
+- Real-time cost tracking (both providers)
 - Basic security/drift features
 - Git workflow tools
+- Real-time team collaboration
+- Team management with RBAC
+- AWS infrastructure import
 - Automated diagrams + documentation
 - \+ more
 
