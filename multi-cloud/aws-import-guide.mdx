@@ -1,6 +1,6 @@
 ---
-title: 'AWS Import Guide'
-description: 'Convert existing AWS infrastructure to Terraform without sharing credentials'
+title: "AWS Import Guide"
+description: "Convert existing AWS infrastructure to Terraform without sharing credentials"
 ---
 
 # AWS Import Guide - Convert Existing Infrastructure to Terraform
@@ -11,10 +11,10 @@ Kyrna allows you to convert your existing AWS infrastructure to Terraform **with
 
 ## Why This Approach?
 
-- ✅ **No AWS credentials needed** - We never access your AWS account
-- ✅ **You control the export** - You run AWS CLI commands with your own credentials
-- ✅ **Secure** - Only you see your infrastructure data
-- ✅ **Flexible** - Multiple export formats supported
+- **No AWS credentials needed** - We never access your AWS account
+- **You control the export** - You run AWS CLI commands with your own credentials
+- **Secure** - Only you see your infrastructure data
+- **Flexible** - Multiple export formats supported
 
 ---
 
@@ -72,6 +72,7 @@ If you have AWS Config enabled, export configuration snapshots.
 
 1. Enable AWS Config in your AWS account
 2. Export configuration for specific resources:
+
    ```bash
    aws configservice get-resource-config-history \
      --resource-type AWS::S3::Bucket \
@@ -162,6 +163,7 @@ curl -X POST https://api.kyrna.com/api/v1/aws-import/import \
 ### Step 3: Review Generated Terraform
 
 The API returns Terraform resources in IR format. You can then:
+
 1. Use the `/chat` endpoint to refine the code
 2. Apply it to your repository
 3. Review and commit
@@ -189,16 +191,19 @@ The API returns Terraform resources in IR format. You can then:
 ## Troubleshooting
 
 ### "Unknown file format" error
+
 - Ensure your JSON is valid
 - Specify the `format` parameter explicitly
 - Check that the file structure matches the expected format
 
 ### Missing resources
+
 - Some resources may not be exported (e.g., default VPCs, default security groups)
 - Use natural language description to fill gaps
 - Manually add missing resources after import
 
 ### Incorrect attribute mappings
+
 - Review the generated Terraform code
 - Use the `/chat` endpoint to fix specific attributes
 - Some AWS-specific attributes may need manual adjustment
@@ -208,9 +213,9 @@ The API returns Terraform resources in IR format. You can then:
 ## Next Steps
 
 After importing:
+
 1. Review the generated Terraform code
 2. Test with `terraform plan` (if you have AWS credentials)
 3. Refine using Kyrna's chat interface
 4. Commit to your repository
 5. Use Kyrna's security scanning and cost analysis features
-
