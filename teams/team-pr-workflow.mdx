@@ -1,0 +1,279 @@
+---
+title: 'Team PR Workflow'
+description: 'Collaborate on pull requests in real-time shared workspaces'
+---
+
+# 🚀 Team PR Workflow - The $100M Feature
+
+## Overview
+
+**Kyrna's Team PR Workflow** is a game-changing feature that transforms how infrastructure teams collaborate on pull requests. Instead of the traditional Git workflow (clone → branch → commit → push → PR), teams work together in **real-time shared workspaces**, building PRs collaboratively like Figma designs.
+
+**No competitor has this.**
+
+---
+
+## 🎯 Why This Is Valuable
+
+### Traditional Workflow (Every Competitor)
+
+```
+❌ Clone repo locally
+❌ Create branch
+❌ Make changes alone
+❌ Commit & push
+❌ Create PR
+❌ Wait for reviews
+❌ Context switching
+❌ Merge conflicts
+❌ No visibility of teammates' work
+```
+
+### Kyrna's Team PR Workflow
+
+```
+✅ Work together in real-time
+✅ See who's editing what
+✅ Mark work as "Ready for PR"
+✅ Create team PR with all contributions
+✅ Everyone gets credit
+✅ No merge conflicts (caught early)
+✅ Fast iteration
+✅ Team coordination built-in
+```
+
+---
+
+## 🔥 Key Features
+
+### 1. **PR Intent System**
+
+Team members can set their work status:
+
+- **⏸️ Work in Progress** - Still making changes, not ready yet
+- **🚀 Ready for PR** - Changes complete, ready to submit
+
+### 2. **Smart Team PR Builder**
+
+When creating a PR, see exactly what everyone contributed:
+
+```
+┌────────────────────────────────────┐
+│ Create Team Pull Request           │
+├────────────────────────────────────┤
+│ Contributors:                      │
+│                                    │
+│ ✅ 🟣 Sarah Chen         🚀 Ready  │
+│    ✏️ networking.tf (3 files)     │
+│    +127 -45                        │
+│                                    │
+│ ✅ 🟢 Mike Rodriguez    🚀 Ready   │
+│    ✏️ security.tf (2 files)       │
+│    +89 -23                         │
+│                                    │
+│ ⚠️ 🔵 You                ⏸️ Draft  │
+│    ✏️ main.tf (1 file)            │
+│    +54 -12                         │
+│                                    │
+│ [Include draft work?]              │
+│ [Create Team PR]                   │
+└────────────────────────────────────┘
+```
+
+**Smart features:**
+- ✅ Auto-selects contributors marked "Ready"
+- ⚠️ Warns about including work-in-progress
+- 📊 Shows stats (files, lines added/removed)
+- 👥 Everyone gets PR credit as co-author
+
+### 3. **Real-Time Coordination**
+
+Team sees everything as it happens:
+
+```
+┌────────────────────────────────────┐
+│ 👥 3 online                        │
+├────────────────────────────────────┤
+│ 🟣 Sarah Chen          🚀 Ready    │
+│    ✏️ editing networking.tf        │
+│                                    │
+│ 🟢 Mike Rodriguez     🚀 Ready     │
+│    ✏️ editing security.tf          │
+│                                    │
+│ 🔵 You                 ⏸️ Draft    │
+│    ✏️ editing main.tf              │
+└────────────────────────────────────┘
+```
+
+---
+
+## 🎨 User Workflows
+
+### Workflow 1: Solo PR (Traditional)
+
+**Use case:** You're working alone
+
+```
+1. Make changes
+2. Click "🚀 Ready for PR"
+3. Click "Create Team PR"
+4. Submit ✅
+```
+
+**Result:** Standard PR, just faster
+
+---
+
+### Workflow 2: Team PR (Coordinated)
+
+**Use case:** Team working on a feature together
+
+```
+Morning standup:
+├─ Team decides: "Let's add monitoring"
+├─ Sarah: "I'll do CloudWatch"
+├─ Mike: "I'll do alerting"
+└─ You: "I'll do dashboards"
+
+Everyone starts working:
+├─ 10:00 AM - All 3 open their files
+├─ 10:30 AM - Sarah finishes → Marks "🚀 Ready"
+├─ 11:00 AM - Mike finishes → Marks "🚀 Ready"
+└─ 11:15 AM - You finish → Marks "🚀 Ready"
+
+Create PR:
+├─ Anyone clicks "Create Team PR"
+├─ Modal shows all 3 contributors
+├─ Auto-includes everyone (all marked ready)
+├─ Add title: "feat: Add comprehensive monitoring"
+├─ Click "Create Team PR"
+└─ ✅ PR created with 3 co-authors!
+
+Team starts next feature immediately 🚀
+```
+
+---
+
+## 🏆 Competitive Advantages
+
+| Feature | Kyrna | Terraform Cloud | Spacelift | env0 |
+|---------|-------|-----------------|-----------|------|
+| Real-time collaboration | ✅ | ❌ | ❌ | ❌ |
+| Team PR building | ✅ | ❌ | ❌ | ❌ |
+| PR intent system | ✅ | ❌ | ❌ | ❌ |
+| Live presence | ✅ | ❌ | ❌ | ❌ |
+| Conflict warnings | ✅ | ❌ | ❌ | ❌ |
+| No local cloning needed | ✅ | ❌ | ❌ | ❌ |
+| Figma-style UX | ✅ | ❌ | ❌ | ❌ |
+
+**Kyrna is the only platform where teams can:**
+1. Work together in real-time on infrastructure
+2. Build PRs collaboratively with proper attribution
+3. Coordinate without leaving the tool
+4. Ship faster with fewer conflicts
+
+---
+
+## 📊 Impact on Team Velocity
+
+### Before Kyrna (Traditional Workflow)
+
+```
+Individual developer cycle:
+├─ 10 min: Clone repo, create branch
+├─ 60 min: Make changes
+├─ 5 min: Commit, push
+├─ 15 min: Create PR, wait for CI
+├─ 30 min: Review cycles
+├─ 15 min: Fix merge conflicts
+└─ 10 min: Merge
+───────────────────────────
+Total: ~145 minutes per PR
+```
+
+### After Kyrna (Team PR Workflow)
+
+```
+Team collaborative cycle:
+├─ 0 min: No cloning (shared workspace)
+├─ 45 min: Work together (real-time awareness)
+├─ 1 min: Mark ready for PR
+├─ 2 min: Create team PR (one click)
+├─ 15 min: Review (less context needed)
+├─ 0 min: No conflicts (caught early)
+└─ 2 min: Merge
+───────────────────────────
+Total: ~65 minutes per PR
+```
+
+### ROI Calculation
+
+**Time saved per PR:** 80 minutes (55% faster)  
+**Team of 5 engineers, 3 PRs/day:** 400 minutes saved/day = **6.7 hours**  
+**Annual savings:** 1,670 hours = **208 workdays**
+
+**At $150k avg salary:** $125,000+ saved per team per year
+
+---
+
+## 🎓 Best Practices
+
+### For Individual Contributors
+
+1. **Mark ready when done** - Let teammates know you're finished
+2. **Check who's editing** - Avoid conflicts by coordinating
+3. **Review activity feed** - Stay aware of team changes
+4. **Toggle back to draft** - If you need to make more changes
+
+### For Teams
+
+1. **Morning sync** - Quick alignment on who's doing what
+2. **Use soft locks** - If someone's editing, coordinate before joining
+3. **Create PRs together** - Don't wait until end of day
+4. **Ship incrementally** - Multiple small PRs > one giant PR
+
+---
+
+## 🔮 Future Enhancements
+
+### Phase 2: Team PR Drafts
+
+```typescript
+// Create a draft PR that team builds together
+<button onClick={() => createDraftPR('Add monitoring')}>
+  📝 Start Team PR Draft
+</button>
+
+// Everyone's changes auto-add to the draft
+// When ready, anyone submits it
+```
+
+### Phase 3: File Locking
+
+```typescript
+// Hard lock option for sensitive files
+<FileLock 
+  file="production.tf" 
+  mode="hard" // Only one editor at a time
+/>
+```
+
+---
+
+## 💎 Why This Makes Kyrna Worth $100M+
+
+### Network Effects
+- **Teams invite teams** - Viral growth
+- **Collaboration is sticky** - High retention
+- **Team success = referrals** - Word of mouth
+
+### Enterprise Appeal
+- **Team coordination** - CIOs love efficiency
+- **Audit trail** - Who did what, when
+- **Velocity metrics** - Prove ROI easily
+
+### Unforkable Moat
+- **Real-time complexity** - Hard to build
+- **Team workflows** - Deep integration
+- **UX innovation** - Figma for infrastructure
+

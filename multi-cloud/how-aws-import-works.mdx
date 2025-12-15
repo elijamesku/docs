@@ -1,0 +1,344 @@
+---
+title: 'How AWS Import Works'
+description: 'Technical deep dive into the AWS import conversion process'
+---
+
+# How AWS Import Works - Step by Step
+
+## The Problem
+
+**User has:** Existing AWS infrastructure (EC2 instances, S3 buckets, VPCs, etc.)  
+**User wants:** Terraform code to manage it  
+**Constraint:** We can't access their AWS account (no credentials)
+
+## The Solution Flow
+
+```
+User's AWS Account          User's Computer          Kyrna API
+     │                            │                        │
+     │ 1. User runs AWS CLI       │                        │
+     │    with THEIR credentials   │                        │
+     ├───────────────────────────>│                        │
+     │                            │                        │
+     │ 2. AWS returns JSON        │                        │
+     │    with resource details   │                        │
+     │<───────────────────────────┤                        │
+     │                            │                        │
+     │                            │ 3. User uploads JSON   │
+     │                            │    to Kyrna            │
+     │                            ├───────────────────────>│
+     │                            │                        │
+     │                            │ 4. Kyrna converts      │
+     │                            │    JSON → Terraform IR │
+     │                            │                        │
+     │                            │ 5. Kyrna returns       │
+     │                            │    Terraform code      │
+     │                            │<───────────────────────┤
+     │                            │                        │
+     │                            │ 6. User reviews &     │
+     │                            │    applies code        │
+```
+
+---
+
+## Detailed Example: EC2 Instance Import
+
+### Step 1: User Exports Their Infrastructure
+
+User runs AWS CLI command **on their computer** with **their AWS credentials**:
+
+```bash
+aws ec2 describe-instances > instances.json
+```
+
+**Output (`instances.json`):**
+```json
+{
+  "Reservations": [
+    {
+      "Instances": [
+        {
+          "InstanceId": "i-1234567890abcdef0",
+          "InstanceType": "t3.micro",
+          "ImageId": "ami-0c55b159cbfafe1f0",
+          "SubnetId": "subnet-12345",
+          "VpcId": "vpc-67890",
+          "SecurityGroups": [
+            {
+              "GroupId": "sg-abc123",
+              "GroupName": "web-servers"
+            }
+          ],
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "web-server-1"
+            },
+            {
+              "Key": "Environment",
+              "Value": "production"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Key Point:** This JSON contains all the resource details, but we never touched AWS - the user did.
+
+---
+
+### Step 2: User Uploads to Kyrna
+
+User sends this JSON to our API:
+
+```bash
+curl -X POST https://api.kyrna.com/api/v1/aws-import/import \
+  -H "Authorization: Bearer USER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "format": "aws_cli",
+    "resource_type": "ec2-instances",
+    "data": {
+      "Reservations": [
+        {
+          "Instances": [
+            {
+              "InstanceId": "i-1234567890abcdef0",
+              "InstanceType": "t3.micro",
+              "ImageId": "ami-0c55b159cbfafe1f0",
+              ...
+            }
+          ]
+        }
+      ]
+    }
+  }'
+```
+
+---
+
+### Step 3: Kyrna Processes the Data
+
+**Inside `aws_import_service.py`:**
+
+```python
+def import_from_aws_cli_output(self, cli_output, resource_type):
+    resources = []
+    
+    # Handle EC2 instances (nested in Reservations)
+    for reservation in cli_output.get('Reservations', []):
+        for instance in reservation.get('Instances', []):
+            # Convert AWS CLI format to Terraform attributes
+            terraform_attrs = {
+                'instance_type': instance.get('InstanceType'),  # "t3.micro"
+                'ami': instance.get('ImageId'),                 # "ami-0c55b159cbfafe1f0"
+                'subnet_id': instance.get('SubnetId'),         # "subnet-12345"
+                'tags': {
+                    'Name': 'web-server-1',
+                    'Environment': 'production'
+                }
+            }
+            
+            resources.append({
+                'resource_type': 'aws_instance',
+                'name': 'web_server_1',  # Sanitized from InstanceId
+                'attrs': terraform_attrs,
+                'file': 'imported.tf',
+                'line': 1
+            })
+    
+    return {'resources': resources, ...}
+```
+
+**What happens:**
+1. **Parse JSON** - Extract resource data from AWS CLI format
+2. **Map Resource Types** - `EC2 Instance` → `aws_instance`
+3. **Convert Attributes** - `InstanceType` → `instance_type`, `ImageId` → `ami`
+4. **Sanitize Names** - `i-1234567890abcdef0` → `web_server_1` (valid Terraform name)
+5. **Format Tags** - Convert AWS tag array to Terraform tag map
+
+---
+
+### Step 4: Kyrna Returns Terraform IR
+
+**API Response:**
+```json
+{
+  "ok": true,
+  "format": "aws_cli",
+  "summary": "Imported 1 ec2-instances from AWS CLI output",
+  "resources": [
+    {
+      "resource_type": "aws_instance",
+      "name": "web_server_1",
+      "attrs": {
+        "instance_type": "t3.micro",
+        "ami": "ami-0c55b159cbfafe1f0",
+        "subnet_id": "subnet-12345",
+        "tags": {
+          "Name": "web-server-1",
+          "Environment": "production"
+        }
+      },
+      "file": "imported.tf",
+      "line": 1
+    }
+  ],
+  "resource_count": 1
+}
+```
+
+---
+
+### Step 5: Convert IR to Terraform HCL
+
+The IR (Intermediate Representation) is then converted to actual Terraform code using your existing HCL generator:
+
+**Generated Terraform (`imported.tf`):**
+```hcl
+resource "aws_instance" "web_server_1" {
+  instance_type = "t3.micro"
+  ami           = "ami-0c55b159cbfafe1f0"
+  subnet_id     = "subnet-12345"
+  
+  tags = {
+    Name        = "web-server-1"
+    Environment = "production"
+  }
+}
+```
+
+---
+
+## How Each Format Works
+
+### 1. AWS CLI Format
+
+**Input:** JSON from `aws ec2 describe-instances`, `aws s3api list-buckets`, etc.
+
+**Process:**
+```python
+# Extract instances from nested Reservations structure
+instances = []
+for reservation in data['Reservations']:
+    instances.extend(reservation['Instances'])
+
+# Convert each instance
+for instance in instances:
+    terraform_attrs = {
+        'instance_type': instance['InstanceType'],
+        'ami': instance['ImageId'],
+        # ... map other fields
+    }
+```
+
+**Output:** Terraform IR with `aws_instance` resources
+
+---
+
+### 2. CloudFormation Format
+
+**Input:** CloudFormation template JSON/YAML
+
+**Example Input:**
+```yaml
+Resources:
+  MyBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: my-app-logs
+      Tags:
+        - Key: Environment
+          Value: production
+```
+
+**Process:**
+```python
+# Map CloudFormation types to Terraform types
+cf_type = "AWS::S3::Bucket"
+terraform_type = "aws_s3_bucket"  # From resource_mappings
+
+# Convert CloudFormation properties to Terraform attributes
+terraform_attrs = {
+    'bucket': properties['BucketName'],  # BucketName → bucket
+    'tags': {tag['Key']: tag['Value'] for tag in properties['Tags']}
+}
+```
+
+**Output:** Terraform IR with `aws_s3_bucket` resources
+
+---
+
+## Key Conversion Logic
+
+### Resource Type Mapping
+
+```python
+resource_mappings = {
+    'AWS::S3::Bucket': 'aws_s3_bucket',
+    'AWS::EC2::Instance': 'aws_instance',
+    'AWS::EC2::VPC': 'aws_vpc',
+    'AWS::RDS::DBInstance': 'aws_db_instance',
+    # ... etc
+}
+```
+
+### Attribute Name Conversion
+
+**AWS CLI → Terraform:**
+- `InstanceType` → `instance_type`
+- `ImageId` → `ami`
+- `SubnetId` → `subnet_id`
+- `Tags` (array) → `tags` (map)
+
+**CloudFormation → Terraform:**
+- `BucketName` → `bucket`
+- `CidrBlock` → `cidr_block`
+- `Tags` (array) → `tags` (map)
+
+### Name Sanitization
+
+```python
+def _sanitize_name(name: str) -> str:
+    # "i-1234567890abcdef0" → "i_1234567890abcdef0"
+    # "my-bucket" → "my_bucket"
+    # "web-server-1" → "web_server_1"
+    sanitized = re.sub(r'[^a-zA-Z0-9_]', '_', name)
+    return sanitized
+```
+
+---
+
+## Why This Works
+
+1. **User has AWS access** - They can export their own infrastructure
+2. **We never touch AWS** - We only process the JSON they give us
+3. **Standard formats** - AWS CLI, CloudFormation, etc. are well-documented
+4. **Deterministic conversion** - JSON structure → Terraform structure is predictable
+5. **No secrets** - User's AWS credentials never leave their computer
+
+---
+
+## Limitations & Edge Cases
+
+### What We Can't Do
+
+- **Computed attributes** - Some AWS attributes are computed (ARNs, IDs) and won't be in exports
+- **Relationships** - Complex resource relationships may need manual adjustment
+- **All resources** - Not every AWS resource type is supported yet
+
+### How We Handle It
+
+- **Natural language fallback** - Users can describe missing pieces
+- **Manual refinement** - Generated code can be edited via chat interface
+- **Incremental import** - Import resources in batches, refine as needed
+
+---
+
+## Summary
+
+**The Magic:** We convert well-structured AWS export JSON into Terraform IR format, which then gets converted to Terraform HCL code. The user does the AWS API calls, we do the format conversion. No AWS credentials needed on our side!
+

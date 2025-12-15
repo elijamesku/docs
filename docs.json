@@ -56,7 +56,23 @@
           {
             "group": "Cloud Support",
             "pages": [
-              "multi-cloud/aws"
+              "multi-cloud/aws",
+              "multi-cloud/digitalocean",
+              "multi-cloud/aws-import-guide",
+              "multi-cloud/how-aws-import-works"
+            ]
+          },
+          {
+            "group": "Collaboration",
+            "pages": [
+              "collaboration/real-time-collaboration"
+            ]
+          },
+          {
+            "group": "Teams",
+            "pages": [
+              "teams/team-management",
+              "teams/team-pr-workflow"
             ]
           }
         ]

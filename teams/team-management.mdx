@@ -1,0 +1,199 @@
+---
+title: 'Team Management'
+description: 'Collaborate on infrastructure with teams, roles, and shared repositories'
+---
+
+# Team Management System
+
+## Overview
+
+Kyrna's Team Management system enables organizations to collaborate on infrastructure-as-code with role-based access control, shared repositories, and team billing.
+
+---
+
+## Features
+
+### ✨ Core Capabilities
+
+1. **Team Creation & Management**
+   - Create unlimited teams
+   - Invite members via email
+   - Manage team settings
+
+2. **Role-Based Access Control (RBAC)**
+   - **Admin**: Full access to team, members, billing, and repositories
+   - **Developer**: Can view, create PRs, and manage infrastructure
+   - **Viewer**: Read-only access to team resources
+
+3. **Shared Repositories**
+   - Add repositories to teams
+   - All members get access based on role
+   - Team-wide visibility of infrastructure
+
+4. **Team Billing**
+   - Team plans via Stripe
+   - Centralized billing for organizations
+   - Per-seat pricing model
+
+---
+
+## Plans & Pricing
+
+### Free Plan
+- **Price**: $0/month
+- **Seats**: 1 member
+- **Repositories**: Unlimited
+- **Features**: Individual use only
+
+### Team Plan
+- **Price**: $999/month
+- **Seats**: 10 members
+- **Repositories**: Unlimited
+- **Features**:
+  - Team collaboration
+  - Shared repositories
+  - Role-based access control
+  - Email invitations
+  - Audit logs
+
+### Enterprise Plan
+- **Price**: $2,999/month
+- **Seats**: Unlimited
+- **Repositories**: Unlimited
+- **Features**:
+  - Everything in Team
+  - SSO integration (coming soon)
+  - Dedicated support
+  - Custom deployment
+  - SLA guarantees
+
+---
+
+## User Guide
+
+### Creating a Team
+
+1. Navigate to `/teams` or click "Teams" in the top bar
+2. Click "Create Team"
+3. Enter team name and optional billing email
+4. Click "Create Team"
+
+You'll automatically become the team **Admin**.
+
+### Inviting Members
+
+**Requires**: Admin role
+
+1. Go to your team dashboard
+2. Click "Invite Member"
+3. Enter email address
+4. Select role (Admin, Developer, or Viewer)
+5. Click "Send Invitation"
+
+The invitee will receive an email with an acceptance link that expires in 7 days.
+
+### Accepting Invitations
+
+1. Check your email for the invitation
+2. Click "Accept Invitation"
+3. Log in to Kyrna (if not already logged in)
+4. You'll be added to the team with your assigned role
+
+### Adding Repositories
+
+**Requires**: Developer or Admin role
+
+1. Go to team dashboard → "Repositories" tab
+2. Click "Add Repository"
+3. Enter repository in format: `owner/repo`
+4. Click "Add Repository"
+
+All team members will now have access to this repository based on their role.
+
+### Managing Members
+
+**Requires**: Admin role
+
+**Change Role:**
+1. Go to "Members" tab
+2. Use the role dropdown next to member's name
+3. Select new role
+4. Changes take effect immediately
+
+**Remove Member:**
+1. Go to "Members" tab
+2. Click trash icon next to member's name
+3. Confirm removal
+
+**Note**: You cannot remove the last admin or demote yourself if you're the only admin.
+
+### Team Billing
+
+**Requires**: Admin role
+
+**Subscribe to Team Plan:**
+1. Go to team dashboard → "Settings" tab
+2. Click "Upgrade to Team Plan"
+3. Complete Stripe checkout
+4. Your team is upgraded immediately
+
+**View Billing:**
+- Billing status, current plan, and payment method visible in team settings
+- Managed through Stripe dashboard
+
+**Cancel Subscription:**
+1. Contact support or use Stripe portal
+2. Choose immediate cancellation or end of billing period
+3. Team will revert to Free plan (1 seat limit)
+
+---
+
+## Role Permissions
+
+| Permission | Admin | Developer | Viewer |
+|------------|-------|-----------|--------|
+| View repositories | ✅ | ✅ | ✅ |
+| Create PRs | ✅ | ✅ | ❌ |
+| Deploy infrastructure | ✅ | ✅ | ❌ |
+| Add repositories | ✅ | ✅ | ❌ |
+| Invite members | ✅ | ❌ | ❌ |
+| Manage members | ✅ | ❌ | ❌ |
+| Change team settings | ✅ | ❌ | ❌ |
+| Manage billing | ✅ | ❌ | ❌ |
+| View audit logs | ✅ | ❌ | ❌ |
+
+---
+
+## Security
+
+### Authentication
+- All endpoints require valid JWT token
+- User must be team member to access team data
+
+### Authorization
+- **RBAC**: Permissions checked before every operation
+- **Audit Logs**: All team actions logged with user, IP, and timestamp
+- **Token Security**: Invitation tokens are cryptographically secure (32 bytes)
+- **Expiration**: Invitations expire after 7 days
+
+### Data Protection
+- Soft deletes preserve audit trail
+- Prevent last admin removal
+- Stripe webhook signature verification
+
+---
+
+## Future Enhancements
+
+### Phase 2 (Multi-Repository Dashboards)
+- Aggregate health scores across team repositories
+- Team-wide drift and security dashboards
+- Comparative analytics
+
+### Phase 3 (Advanced Features)
+- SSO integration (SAML, OAuth)
+- Custom roles with granular permissions
+- Team templates and onboarding flows
+- Slack/Discord integrations
+- Advanced audit log filtering
+

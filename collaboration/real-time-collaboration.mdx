@@ -1,0 +1,193 @@
+---
+title: 'Real-Time Team Collaboration'
+description: 'Figma for Infrastructure-as-Code - Collaborate on infrastructure in real-time'
+---
+
+# 🚀 Real-Time Team Collaboration
+
+## **Figma for Infrastructure-as-Code**
+
+Kyrna enables **Google Docs-style real-time collaboration** for infrastructure teams. See your teammates' changes live, avoid conflicts, and collaborate seamlessly - without cloning repositories or dealing with merge conflicts.
+
+---
+
+## 🎯 **The Problem We Solve**
+
+### **Traditional Infrastructure Collaboration (SUCKS)**
+
+```
+1. Get added to GitHub org
+2. Clone repo locally (wait for git clone...)
+3. Make changes in your editor
+4. git add, commit, push
+5. Create PR
+6. Teammate made same change → MERGE CONFLICT
+7. Resolve conflicts manually
+8. Push again
+9. Finally merged... 2 hours later
+```
+
+### **Kyrna Real-Time Collaboration (REVOLUTIONARY)**
+
+```
+1. Get invited to Kyrna team (1 click)
+2. Instant access to shared workspace
+3. See Sarah editing networking.tf LIVE
+4. See Mike's cursor in main.tf REAL-TIME
+5. Get notified: "⚠️ Sarah just changed this line!"
+6. NO conflicts - instant sync
+7. Deploy together as a team
+```
+
+**10x faster. Zero conflicts. Pure magic.** ✨
+
+---
+
+## 🌟 **Key Features**
+
+### **1. Live Presence**
+
+See who's online and what they're doing:
+
+```
+👤 Sarah Chen (editing networking.tf)
+👤 Mike Rodriguez (viewing security.tf)
+👤 You (main.tf)
+```
+
+### **2. Real-Time File Activity**
+
+Know who's editing what:
+
+```
+⚠️ 2 people are editing this file
+   - Sarah started editing 5m ago
+   - Mike joined 30s ago
+```
+
+### **3. Change Notifications**
+
+Instant updates when teammates make changes:
+
+```
+📝 Sarah modified networking.tf (just now)
+🚀 Mike deployed to production (2m ago)
+✅ John approved changes (5m ago)
+```
+
+### **4. Cursor Tracking** (Coming Soon)
+
+See exactly where your teammates are typing:
+
+```terraform
+resource "aws_instance" "web" {
+  instance_type = "t3.medium"  ← Sarah's cursor 🟣
+  ami = "ami-12345"             ← Your cursor 🔵
+  tags = {                      ← Mike's cursor 🟢
+```
+
+### **5. Conflict Prevention**
+
+Automatic warnings before conflicts happen:
+
+```
+⚠️ Warning: Sarah just modified line 45
+⚠️ Mike is currently editing this section
+💡 Suggestion: Edit different file or coordinate
+```
+
+---
+
+## 🎨 **How It Looks**
+
+### **Presence Indicator (Bottom-Right)**
+
+```
+┌─────────────────────────────┐
+│ 👥 3 online               ▼ │
+├─────────────────────────────┤
+│ ONLINE NOW                  │
+│                             │
+│ 🟣 Sarah Chen              │
+│    ✏️ editing networking.tf│
+│                             │
+│ 🟢 Mike Rodriguez          │
+│    👁️ viewing security.tf  │
+│                             │
+│ 🔵 You                     │
+│    ✏️ editing main.tf      │
+├─────────────────────────────┤
+│ RECENT ACTIVITY             │
+│                             │
+│ ⏱️ Sarah modified network... │
+│    2m ago                   │
+│                             │
+│ ⏱️ Mike deployed to prod    │
+│    5m ago                   │
+└─────────────────────────────┘
+```
+
+---
+
+## 🛠️ **Technical Architecture**
+
+### **Backend: WebSocket Manager**
+
+```python
+# app/services/team_collaboration.py
+class TeamCollaborationManager:
+    # Track connections: {team_id: {user_id: websocket}}
+    # Track presence: {team_id: {user_id: {name, status, file}}}
+    # Track cursors: {team_id: {user_id: {file, line, column}}}
+    # Track changes: {team_id: [recent_changes]}
+    
+    async def broadcast_to_team(team_id, message)
+    async def broadcast_file_change(team_id, user, file, change)
+    async def update_cursor_position(team_id, user, line, column)
+```
+
+---
+
+## 🚀 **Rollout Plan**
+
+### **Phase 1: MVP (This Build)** ✅
+- [x] WebSocket infrastructure
+- [x] Presence tracking (who's online)
+- [x] File activity (who's editing what)
+- [x] Recent changes feed
+- [x] Conflict warnings
+- [x] UI component
+
+### **Phase 2: Enhanced (Next Week)**
+- [ ] Live cursor positions in editor
+- [ ] Cursor color per user
+- [ ] Name tags on cursors
+- [ ] Selection highlighting
+
+### **Phase 3: Advanced (Week After)**
+- [ ] Operational Transform (conflict-free editing)
+- [ ] Auto-merge compatible changes
+- [ ] File version history
+- [ ] Inline comments on code
+- [ ] @mentions
+
+---
+
+## 💰 **Business Impact**
+
+### **This Makes Kyrna Worth $100M+**
+
+**Why?**
+1. **First-ever** real-time collaborative IaC editor
+2. **No competitors** have this (Terraform Cloud, Spacelift, env0 - all use GitHub)
+3. **10x better** than current workflow
+4. **Network effects** - teams can't leave once adopted
+5. **Viral growth** - teammates invite teammates
+
+**Comparable Companies:**
+- **Figma**: $20B (real-time design)
+- **Replit**: $1.16B (real-time code)
+- **Cursor**: $400M valuation (AI code editor)
+
+**Kyrna = Cursor + Figma + Terraform** 🚀
+

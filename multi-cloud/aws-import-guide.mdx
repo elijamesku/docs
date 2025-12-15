@@ -1,0 +1,216 @@
+---
+title: 'AWS Import Guide'
+description: 'Convert existing AWS infrastructure to Terraform without sharing credentials'
+---
+
+# AWS Import Guide - Convert Existing Infrastructure to Terraform
+
+## Overview
+
+Kyrna allows you to convert your existing AWS infrastructure to Terraform **without requiring AWS credentials on our side**. You export your infrastructure using AWS-native tools, and we convert it to Terraform code.
+
+## Why This Approach?
+
+- ✅ **No AWS credentials needed** - We never access your AWS account
+- ✅ **You control the export** - You run AWS CLI commands with your own credentials
+- ✅ **Secure** - Only you see your infrastructure data
+- ✅ **Flexible** - Multiple export formats supported
+
+---
+
+## Supported Import Formats
+
+### 1. AWS CLI Output (Recommended)
+
+Export your resources using AWS CLI describe commands, then upload the JSON output.
+
+**Example Commands:**
+
+```bash
+# EC2 Instances
+aws ec2 describe-instances > instances.json
+
+# S3 Buckets
+aws s3api list-buckets > buckets.json
+
+# RDS Databases
+aws rds describe-db-instances > rds.json
+
+# VPCs
+aws ec2 describe-vpcs > vpcs.json
+
+# Subnets
+aws ec2 describe-subnets > subnets.json
+
+# Security Groups
+aws ec2 describe-security-groups > security-groups.json
+
+# Lambda Functions
+aws lambda list-functions > lambda.json
+```
+
+**API Usage:**
+
+```bash
+curl -X POST https://api.kyrna.com/api/v1/aws-import/import \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "format": "aws_cli",
+    "resource_type": "ec2-instances",
+    "data": <paste JSON from instances.json>
+  }'
+```
+
+---
+
+### 2. AWS Config Snapshot
+
+If you have AWS Config enabled, export configuration snapshots.
+
+**Export Steps:**
+
+1. Enable AWS Config in your AWS account
+2. Export configuration for specific resources:
+   ```bash
+   aws configservice get-resource-config-history \
+     --resource-type AWS::S3::Bucket \
+     --resource-id my-bucket > config-snapshot.json
+   ```
+3. Or download from AWS Config console
+
+---
+
+### 3. CloudFormation Template
+
+If your infrastructure was created with CloudFormation, export the template.
+
+**Export Steps:**
+
+```bash
+# Get CloudFormation template
+aws cloudformation get-template \
+  --stack-name MyStack \
+  --query TemplateBody > template.json
+```
+
+---
+
+### 4. Terraform State File
+
+If you already have some Terraform state, import from it.
+
+**Export Steps:**
+
+```bash
+# Export Terraform state to JSON
+terraform show -json > terraform.tfstate.json
+```
+
+---
+
+### 5. Natural Language Description
+
+Describe your infrastructure in plain English, and our AI will generate Terraform code.
+
+**Example:**
+
+```
+I have:
+- An S3 bucket named "my-app-logs" with versioning enabled
+- A VPC with CIDR block 10.0.0.0/16 in us-east-1
+- Two subnets: 10.0.1.0/24 (public) and 10.0.2.0/24 (private)
+- A t3.micro EC2 instance in the public subnet
+- An RDS MySQL database (db.t3.micro) in the private subnet
+```
+
+---
+
+## Complete Example Workflow
+
+### Step 1: Export Your Infrastructure
+
+```bash
+# Create a directory for exports
+mkdir aws-exports
+cd aws-exports
+
+# Export all major resources
+aws ec2 describe-instances > instances.json
+aws s3api list-buckets > buckets.json
+aws ec2 describe-vpcs > vpcs.json
+aws ec2 describe-subnets > subnets.json
+aws ec2 describe-security-groups > security-groups.json
+aws rds describe-db-instances > rds.json
+aws lambda list-functions > lambda.json
+```
+
+### Step 2: Import Each Resource Type
+
+```bash
+# Import EC2 instances
+curl -X POST https://api.kyrna.com/api/v1/aws-import/import \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"format\": \"aws_cli\",
+    \"resource_type\": \"ec2-instances\",
+    \"data\": $(cat instances.json)
+  }"
+```
+
+### Step 3: Review Generated Terraform
+
+The API returns Terraform resources in IR format. You can then:
+1. Use the `/chat` endpoint to refine the code
+2. Apply it to your repository
+3. Review and commit
+
+---
+
+## Limitations
+
+- **Partial Coverage**: Not all AWS resources are supported yet. Common resources (EC2, S3, RDS, VPC, Lambda) are fully supported.
+- **Complex Relationships**: Some resource relationships may need manual adjustment after import.
+- **Computed Attributes**: Some attributes are computed by AWS and won't be in the export (e.g., ARNs, IDs). These are handled automatically.
+
+---
+
+## Best Practices
+
+1. **Export by Resource Type**: Export each resource type separately for better organization
+2. **Review Generated Code**: Always review the generated Terraform before applying
+3. **Test in Dev First**: Import to a dev environment first to validate
+4. **Use Natural Language for Complex Setups**: For complex infrastructure with many relationships, natural language descriptions often work better
+5. **Combine Formats**: Use AWS CLI for most resources, CloudFormation for stacks, natural language for gaps
+
+---
+
+## Troubleshooting
+
+### "Unknown file format" error
+- Ensure your JSON is valid
+- Specify the `format` parameter explicitly
+- Check that the file structure matches the expected format
+
+### Missing resources
+- Some resources may not be exported (e.g., default VPCs, default security groups)
+- Use natural language description to fill gaps
+- Manually add missing resources after import
+
+### Incorrect attribute mappings
+- Review the generated Terraform code
+- Use the `/chat` endpoint to fix specific attributes
+- Some AWS-specific attributes may need manual adjustment
+
+---
+
+## Next Steps
+
+After importing:
+1. Review the generated Terraform code
+2. Test with `terraform plan` (if you have AWS credentials)
+3. Refine using Kyrna's chat interface
+4. Commit to your repository
+5. Use Kyrna's security scanning and cost analysis features
+

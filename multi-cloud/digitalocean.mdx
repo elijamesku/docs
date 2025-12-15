@@ -1,0 +1,246 @@
+---
+title: 'DigitalOcean Infrastructure'
+description: 'Create and manage DigitalOcean infrastructure with Terraform'
+---
+
+# DigitalOcean Infrastructure Support
+
+Kyrna supports creating and managing DigitalOcean infrastructure using Terraform, alongside AWS support.
+
+## Current Features
+
+### Cloud Provider Selection
+
+In the chat interface, you can switch between AWS and DigitalOcean using the cloud provider toggle:
+
+- **AWS** (☁️) - Default provider
+- **DigitalOcean** (💧) - Alternative provider
+
+The toggle appears in the chat input area when in **Ask** or **Agent** mode.
+
+### Supported DigitalOcean Resources
+
+Kyrna can generate Terraform code for the following DigitalOcean resources:
+
+#### Compute
+- `digitalocean_droplet` - Virtual machines (droplets)
+- `digitalocean_kubernetes_cluster` - Managed Kubernetes (DOKS)
+
+#### Database
+- `digitalocean_database_cluster` - Managed databases (PostgreSQL, MySQL, Redis, MongoDB)
+
+#### Storage
+- `digitalocean_spaces_bucket` - S3-compatible object storage
+- `digitalocean_volume` - Block storage volumes
+
+#### Networking
+- `digitalocean_vpc` - Virtual Private Cloud
+- `digitalocean_loadbalancer` - Load balancers
+- `digitalocean_firewall` - Firewall rules
+- `digitalocean_domain` - DNS domains
+- `digitalocean_record` - DNS records
+- `digitalocean_floating_ip` - Floating IP addresses
+
+#### Other
+- `digitalocean_app` - App Platform deployments
+- `digitalocean_cdn` - CDN (included with Spaces)
+- `digitalocean_container_registry` - Container registry
+- `digitalocean_project` - Resource organization
+- `digitalocean_ssh_key` - SSH keys
+- `digitalocean_tag` - Resource tags
+
+### Cost Estimation
+
+Kyrna provides cost estimation for DigitalOcean resources:
+
+- **Droplets:** Based on size (s-1vcpu-1gb = $6/month, s-2vcpu-4gb = $24/month, etc.)
+- **Databases:** Based on size and node count (db-s-1vcpu-1gb = $15/month)
+- **Load Balancers:** $12/month (small) or $60/month (large)
+- **Spaces:** $5/month base (includes 250GB storage + 1TB transfer)
+- **Volumes:** $0.10/GB/month
+- **VPC, Firewalls, DNS:** Free
+
+Cost estimates appear when generating infrastructure in Agent mode.
+
+### Security Scanning
+
+Kyrna automatically checks DigitalOcean resources for security issues:
+
+- Droplets without VPC protection
+- Firewalls allowing all inbound traffic
+- Public Spaces buckets
+- Publicly accessible databases
+- Load balancers without HTTPS
+- Missing backups or monitoring
+
+Security suggestions appear in the chat interface when viewing repositories with existing infrastructure.
+
+## Usage
+
+### Creating DigitalOcean Infrastructure
+
+1. **Select DigitalOcean Provider:**
+   - Click the cloud provider toggle in chat (☁️/💧)
+   - Switch to DigitalOcean (💧)
+
+2. **Generate Infrastructure:**
+   - In **Agent mode**, describe what you want to create
+   - Example: "Create a 2GB droplet with PostgreSQL database in NYC3"
+
+3. **Review Generated Code:**
+   - Kyrna generates Terraform files
+   - Review the diffs in the editor
+   - Accept or modify as needed
+
+4. **Create Pull Request:**
+   - Click "Push & Create Pull Request"
+   - Terraform files are committed and pushed to GitHub
+   - PR is created for review
+
+### Example Prompts
+
+**Droplet:**
+```
+Create a 2GB Ubuntu droplet named web-server in NYC3
+```
+
+**Database:**
+```
+Create a PostgreSQL 15 database cluster with 2GB RAM in NYC3
+```
+
+**Load Balancer:**
+```
+Create a load balancer for two web servers with health checks
+```
+
+**Complete Stack:**
+```
+Create a VPC with two droplets, a PostgreSQL database, and a load balancer
+```
+
+## Terraform Code Generation
+
+Kyrna generates proper Terraform HCL for DigitalOcean:
+
+```hcl
+# Example: Droplet
+resource "digitalocean_droplet" "web_server" {
+  name   = "web-server-1"
+  size   = "s-2vcpu-4gb"
+  image  = "ubuntu-22-04-x64"
+  region = "nyc3"
+  vpc_uuid = digitalocean_vpc.main_vpc.id
+  tags   = ["web", "server"]
+}
+
+# Example: Database
+resource "digitalocean_database_cluster" "main_db" {
+  name       = "main-database"
+  engine     = "pg"
+  version    = "15"
+  size       = "db-s-1vcpu-2gb"
+  region     = "nyc3"
+  node_count = 1
+  private_network_uuid = digitalocean_vpc.main_vpc.id
+}
+```
+
+## Regions
+
+Supported DigitalOcean regions:
+- `nyc1`, `nyc3` - New York
+- `sfo3` - San Francisco
+- `ams3` - Amsterdam
+- `sgp1` - Singapore
+- `lon1` - London
+- `fra1` - Frankfurt
+- `blr1` - Bangalore
+- `tor1` - Toronto
+
+## Droplet Sizes
+
+Common droplet sizes:
+- `s-1vcpu-1gb` - $6/month
+- `s-1vcpu-2gb` - $12/month
+- `s-2vcpu-2gb` - $18/month
+- `s-2vcpu-4gb` - $24/month
+- `s-4vcpu-8gb` - $48/month
+- `s-8vcpu-16gb` - $96/month
+
+## Database Sizes
+
+Common database sizes:
+- `db-s-1vcpu-1gb` - $15/month
+- `db-s-1vcpu-2gb` - $30/month
+- `db-s-2vcpu-4gb` - $60/month
+- `db-s-4vcpu-8gb` - $120/month
+
+## Current Limitations
+
+- **Manual Deployment Required:** Currently, you need to run `terraform apply` manually after creating PRs
+- **No OAuth Integration:** DigitalOcean API tokens must be provided manually (see Planned Features below)
+
+## Planned Features
+
+### DigitalOcean OAuth Integration
+
+**Status:** Planned
+
+Users will be able to connect their DigitalOcean account via OAuth, similar to GitHub OAuth:
+
+1. User clicks "Connect DigitalOcean" in Settings
+2. Redirects to DigitalOcean OAuth page
+3. User authorizes Kyrna
+4. Token stored securely (encrypted)
+5. No manual token entry required
+
+### Auto-Deploy After PR Merge
+
+**Status:** Planned
+
+Infrastructure will automatically deploy to DigitalOcean after PRs are merged:
+
+1. User creates Terraform files in Kyrna
+2. User creates PR (existing flow)
+3. User merges PR on GitHub
+4. GitHub webhook triggers Kyrna backend
+5. Backend uses stored OAuth token to run `terraform apply`
+6. Infrastructure automatically deployed
+
+**Workflow:**
+```
+Create Terraform files → Create PR → Merge PR → Auto-deploy to DigitalOcean
+```
+
+This eliminates the need for manual `terraform apply` commands.
+
+## Comparison: AWS vs DigitalOcean
+
+| Feature | AWS | DigitalOcean |
+|---------|-----|--------------|
+| **Provider Toggle** | ✅ | ✅ |
+| **Cost Estimation** | ✅ | ✅ |
+| **Security Scanning** | ✅ | ✅ |
+| **Resource Support** | 30+ resources | 18+ resources |
+| **OAuth Integration** | Planned | Planned |
+| **Auto-Deploy** | Planned | Planned |
+
+Both providers are fully supported for Terraform code generation. Choose based on your infrastructure needs.
+
+## Getting Started
+
+1. **Switch to DigitalOcean:**
+   - Open chat panel
+   - Click cloud provider toggle (☁️ → 💧)
+
+2. **Create Infrastructure:**
+   - Use Agent mode
+   - Describe what you want to create
+   - Review and accept generated code
+
+3. **Deploy:**
+   - Create PR (existing flow)
+   - Merge PR on GitHub
+   - Run `terraform apply` manually (until auto-deploy is available)
+
